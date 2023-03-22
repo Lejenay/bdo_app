@@ -168,14 +168,20 @@ def index():
     level = None
     item = None
     family_fame = False
+    pp = False
     if request.method == 'POST':
         item = request.form['item']
         level = request.form['level']
         family_fame = "family_fame" in request.form
-        if family_fame:
+        pp = "pp" in request.form
+        if family_fame and pp:
             tax = 0.8547
-        else:
+        elif family_fame:
+            tax = 0.6598
+        elif pp:
             tax = 0.8483
+        else:
+            tax = 0.6533
 
     # アクセサリーと強化関数のマッピング
     accessories = {
@@ -217,7 +223,7 @@ def index():
     name = ja_name(item)
     level = ja_level_name(level)
 
-    return render_template('index.html', tap=tap, sell=sell, name=name, level=level, family_fame=family_fame)
+    return render_template('index.html', tap=tap, sell=sell, name=name, level=level, family_fame=family_fame, pp=pp)
 
 @app.context_processor
 def override_url_for():
