@@ -4,6 +4,10 @@
       <link rel="apple-touch-icon" type="image/png" href="{{ url_for('static', filename='apple-touch-icon-180x180.png') }}">
       <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon-192x192.png') }}">
       <title>黒い砂漠 アクセ期待値</title>
+      
+      <!-- Select2 CSS -->
+      <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+      
       <style>
          body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
@@ -92,6 +96,34 @@
             font-weight: normal;
             display: inline;
          }
+      
+         .select2-container--default .select2-results__option {
+            display: flex;
+            align-items: center;
+         }
+
+         .option-image {
+            width: 20px;
+            height: 20px;
+            margin-right: 10px;
+         }
+
+         .select2-container {
+            width: 100% !important;
+         }
+
+         .select2-container .select2-selection--single {
+            height: 38px !important;
+         }
+
+         .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 38px !important;
+         }
+
+         .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 38px !important;
+         }
+
       </style>
    </head>
    <body>
@@ -104,25 +136,25 @@
       <h1>手持ちのアクセを錬金しちゃおう！</h1>
       <form method="POST">
          <label for="item">アクセ:</label>
-         <select name="item" id="item">
-            <option value="crescent">三日月リング</option>
-            <option value="tun_ring">ツンリング</option>
-            <option value="tun_belt">ツンベルト</option>
-            <option value="disto">侵食</option>
-            <option value="narc">ナク</option>
-            <option value="ruin_ring">廃墟リング</option>
-            <option value="tun_ear">ツン耳</option>
-            <option value="tun_neck">ツンネク</option>
-            <option value="turo_belt">トゥーロベルト</option>
-            <option value="basi_belt">バジベルト</option>
-            <option value="centa_belt">ケンタベルト</option>
-            <option value="ominous_ring">背後リング</option>
-            <option value="ogre_ring">オガリン</option>
-            <option value="laytenn">ライテン</option>
-            <option value="sicil">シチル</option>
-            <option value="dawn">黎明</option>
-            <option value="vaha">バア</option>
-            <option value="cadry">カドリー</option>
+         <select name="item" id="item" class="select2">
+            <option value="crescent" data-image="{{ url_for('static', filename='crescent.webp') }}">三日月リング</option>
+            <option value="tun_ring" data-image="{{ url_for('static', filename='tun_ring.webp') }}">ツンリング</option>
+            <option value="tun_belt" data-image="{{ url_for('static', filename='tun_belt.webp') }}">ツンベルト</option>
+            <option value="disto" data-image="{{ url_for('static', filename='disto.webp') }}">侵食</option>
+            <option value="narc" data-image="{{ url_for('static', filename='narc.webp') }}">ナク</option>
+            <option value="ruin_ring" data-image="{{ url_for('static', filename='ruin_ring.webp') }}">廃墟リング</option>
+            <option value="tun_ear" data-image="{{ url_for('static', filename='tun_ear.webp') }}">ツン耳</option>
+            <option value="tun_neck" data-image="{{ url_for('static', filename='tun_neck.webp') }}">ツンネク</option>
+            <option value="turo_belt" data-image="{{ url_for('static', filename='turo_belt.webp') }}">トゥーロベルト</option>
+            <option value="basi_belt" data-image="{{ url_for('static', filename='basi_belt.webp') }}">バジベルト</option>
+            <option value="centa_belt" data-image="{{ url_for('static', filename='centa_belt.webp') }}">ケンタベルト</option>
+            <option value="ominous_ring" data-image="{{ url_for('static', filename='ominous_ring.webp') }}">背後リング</option>
+            <option value="ogre_ring" data-image="{{ url_for('static', filename='ogre_ring.webp') }}">オガリン</option>
+            <option value="laytenn" data-image="{{ url_for('static', filename='laytenn.webp') }}">ライテン</option>
+            <option value="sicil" data-image="{{ url_for('static', filename='sicil.webp') }}">シチル</option>
+            <option value="dawn" data-image="{{ url_for('static', filename='dawn.webp') }}">黎明</option>
+            <option value="vaha" data-image="{{ url_for('static', filename='vaha.webp') }}">バア</option>
+            <option value="cadry" data-image="{{ url_for('static', filename='cadry.webp') }}">カドリー</option>
             
          </select>
          <label for="item">強化段階:</label>
@@ -147,5 +179,30 @@
       {% if sell %}
          <p>{{ name }}をそのまま売ると、売り上げ(シルバー)は{{ sell }}です。</p>
       {% endif %}
+
+      <!-- jQuery and Select2 JavaScript -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+      <script>
+         $(document).ready(function() {
+            function formatOption (option) {
+               if (!option.id) {
+                  return option.text;
+               }
+               var imgSrc = $(option.element).data('image');
+               var optionText = option.text;
+               var $option = $(
+                  '<span><img src="' + imgSrc + '" class="option-image" /> ' + optionText + '</span>'
+               );
+               return $option;
+            };
+
+            $('.select2').select2({
+               templateResult: formatOption,
+               templateSelection: formatOption,
+               escapeMarkup: function(m) { return m; }
+            });
+         });
+      </script>
    </body>
 </html>
