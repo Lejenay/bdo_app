@@ -50,7 +50,7 @@ def item_api_call(item_id):
     del res_list[-1]
     return int(res_list[3])
 
-
+tax = 0.8547
 
 # DB // SQLってなに
 bs_armour = item_api_call(16002)
@@ -70,9 +70,12 @@ ominous_ring = acc_api_call(12068)
 ogre_ring = acc_api_call(11607)
 laytenn = acc_api_call(11630)
 sicil = acc_api_call(11625)
+dawn = acc_api_call(11855)
+vaha = acc_api_call(11875)
+cadry = acc_api_call(12032)
 
 # tax // hopefully, set depending on family fame
-tax = 0.8547
+
 
 def ja_name(item):
     accessories = {
@@ -90,7 +93,10 @@ def ja_name(item):
         'ominous_ring': '背後リング',
         'ogre_ring': 'オーガリング',
         'laytenn': 'ライテン',
-        'sicil': 'シチル'
+        'sicil': 'シチル',
+        'dawn': '黎明',
+        'vaha': 'バア',
+        'cadry': 'カドリー'
     }
 
     if item in accessories.keys():
@@ -107,7 +113,7 @@ def ja_level_name(level):
         return lv[level]
 
 
-def acc_pri(acc):
+def acc_pri(acc, tax):
     stack_cost = bs_armour * 31
     chance = 0.70
     # 18fsでsoftcap
@@ -124,7 +130,7 @@ def acc_pri(acc):
     以下同様
     '''
 
-def acc_duo(acc):
+def acc_duo(acc, tax):
     try2_stack_cost = (280 + 31) * bs_armour
     try1_stack_cost = 31 * bs_armour
     s2_chance = 0.7*0.5
@@ -138,7 +144,7 @@ def acc_duo(acc):
 
     return str_duo_expected_value, str_base_sell
 
-def acc_tri(acc):
+def acc_tri(acc, tax):
     try3_stack_cost = (480 + 280 + 31) * bs_armour
     try2_stack_cost = (280 + 31) * bs_armour
     try1_stack_cost = 31 * bs_armour
@@ -161,9 +167,15 @@ def index():
     name = None
     level = None
     item = None
+    family_fame = False
     if request.method == 'POST':
         item = request.form['item']
         level = request.form['level']
+        family_fame = "family_fame" in request.form
+        if family_fame:
+            tax = 0.8547
+        else:
+            tax = 0.8483
 
     # アクセサリーと強化関数のマッピング
     accessories = {
@@ -181,7 +193,10 @@ def index():
         'ominous_ring': ominous_ring,
         'ogre_ring': ogre_ring,
         'laytenn': laytenn,
-        'sicil': sicil
+        'sicil': sicil,
+        'dawn': dawn,
+        'vaha': vaha,
+        'cadry': cadry
     }
 
     # 強化レベルと関数のマッピング
@@ -197,12 +212,12 @@ def index():
 
     # 強化期待値と売り上げを計算
     if selected_accessory and selected_func:
-        tap, sell = selected_func(selected_accessory)
+        tap, sell = selected_func(selected_accessory, tax)
 
     name = ja_name(item)
     level = ja_level_name(level)
 
-    return render_template('index.html', tap=tap, sell=sell, name=name, level=level)
+    return render_template('index.html', tap=tap, sell=sell, name=name, level=level, family_fame=family_fame)
 
 @app.context_processor
 def override_url_for():

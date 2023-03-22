@@ -1,25 +1,38 @@
 <!doctype html>
 <html>
    <head>
-      <link rel="apple-touch-icon" type="image/png" href="/apple-touch-icon-180x180.png">
-      <link rel="icon" type="image/png" href="/icon-192x192.png">
+      <link rel="apple-touch-icon" type="image/png" href="{{ url_for('static', filename='apple-touch-icon-180x180.png') }}">
+      <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon-192x192.png') }}">
       <title>黒い砂漠 アクセ期待値</title>
       <style>
          body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-            background-color: #f3f3f3;
+            background-color: #e9f7ef;
             color: #333;
             line-height: 1.6;
             margin: 0;
             padding: 0;
          }
 
-         h1 {
-            background-color: #333;
+         header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #4caf50;
+            padding: 15px;
             color: #fff;
+         }
+
+         header img {
+            height: 40px;
+         }
+
+         h1 {
+            font-size: 24px;
+            text-align: center;
             padding: 20px;
             margin-bottom: 30px;
-            text-align: center;
+            color: #4caf50;
          }
 
          form {
@@ -28,6 +41,7 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
          }
 
          label {
@@ -48,7 +62,7 @@
             display: block;
             width: 100%;
             padding: 10px;
-            background-color: #333;
+            background-color: #4caf50;
             color: #fff;
             border: none;
             font-size: 1rem;
@@ -58,7 +72,7 @@
          }
 
          input[type="submit"]:hover {
-            background-color: #555;
+            background-color: #3e8e41;
          }
 
          p {
@@ -67,10 +81,26 @@
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+         }
+
+         input[type="checkbox"] {
+            margin: 0 10px 0 0;
+         }
+
+         .checkbox-label {
+            font-weight: normal;
+            display: inline;
          }
       </style>
    </head>
    <body>
+      <header>
+         <a href="https://twitter.com/Lejenay" target="_blank">
+            <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
+         </a>
+         <span>黒い砂漠 アクセ期待値 計算機</span>
+      </header>
       <h1>手持ちのアクセを錬金しちゃおう！</h1>
       <form method="POST">
          <label for="item">アクセ:</label>
@@ -90,6 +120,9 @@
             <option value="ogre_ring">オガリン</option>
             <option value="laytenn">ライテン</option>
             <option value="sicil">シチル</option>
+            <option value="dawn">黎明</option>
+            <option value="vaha">バア</option>
+            <option value="cadry">カドリー</option>
             
          </select>
          <label for="item">強化段階:</label>
@@ -98,6 +131,11 @@
             <option value="duo">真2</option>
             <option value="tri">真3</option>
          </select>
+
+         <label for="family-fame">家門名声:</label>
+         <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
+         <label class="checkbox-label" for="family_fame">7000以上</label>
+
          <br>
          <br>
          <input type="submit" value="表示">
