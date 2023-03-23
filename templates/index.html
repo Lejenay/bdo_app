@@ -1,9 +1,10 @@
 <!doctype html>
 <html>
    <head>
+      <meta name="description" content="MMOPRG,黒い砂漠のアクセサリー強化において、強化したほうが儲けが出るのか、そのまま売ったほうが良いのかを考察できる計算機です。絶賛開発中。" />
       <link rel="apple-touch-icon" type="image/png" href="{{ url_for('static', filename='apple-touch-icon-180x180.png') }}">
       <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon-192x192.png') }}">
-      <title>黒い砂漠 アクセ期待値</title>
+      <title>黒い砂漠 アクセ期待値計算機</title>
       
       <!-- Select2 CSS -->
       <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -29,6 +30,20 @@
 
          header img {
             height: 40px;
+         }
+
+         header .name {
+            font-size: 1.1em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: opacity 0.2s;
+            margin-left: 10px;
+         }
+
+
+
+         header .name-hover {
+            opacity: 0;
          }
 
          h1 {
@@ -139,12 +154,23 @@
             height: 38px !important;
          }
 
+         a, a:visited {
+            color: inherit;
+            text-decoration: none;
+         }
+
+         a:hover, a:focus {
+            color: inherit;
+            text-decoration: none;
+         }
+
       </style>
    </head>
    <body>
       <header>
-         <a href="https://twitter.com/Lejenay" target="_blank">
+         <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
             <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
+            <span class="name" id="header-name" onclick="location.reload();">れじぇない</span>
          </a>
          <span>黒い砂漠 アクセ期待値 計算機</span>
       </header>
@@ -230,6 +256,25 @@
                templateResult: formatOption,
                templateSelection: formatOption,
                escapeMarkup: function(m) { return m; }
+            });
+
+            var nameElement = $('header .name');
+            nameElement.on('mouseover', function() {
+               setTimeout(function() {
+                  nameElement.css('color', '#fff');
+               }, 300);
+            });
+
+            nameElement.on('mouseout', function() {
+               nameElement.css('color', 'transparent');
+            });
+
+            $('#header-name').on('mouseenter', function() {
+               $(this).addClass('name-hover');
+               setTimeout(() => {
+                  $(this).removeClass('name-hover');
+               }, 200);
+
             });
          });
       </script>
