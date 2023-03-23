@@ -39,6 +39,19 @@
             color: #4caf50;
          }
 
+         .container {
+            display: flex;
+            justify-content: space-between;
+         }
+
+         .form-container {
+            flex-basis: 50%;
+         }
+
+         .results-container {
+            flex-basis: 50%;
+         }
+
          form {
             max-width: 600px;
             margin: 0 auto;
@@ -96,7 +109,7 @@
             font-weight: normal;
             display: inline;
          }
-      
+
          .select2-container--default .select2-results__option {
             display: flex;
             align-items: center;
@@ -134,55 +147,65 @@
          <span>黒い砂漠 アクセ期待値 計算機</span>
       </header>
       <h1>手持ちのアクセを錬金しちゃおう！</h1>
-      <form method="POST">
-         <label for="item">アクセ:</label>
-         <select name="item" id="item" class="select2">
-            <option value="crescent" data-image="{{ url_for('static', filename='crescent.webp') }}">三日月リング</option>
-            <option value="tun_ring" data-image="{{ url_for('static', filename='tun_ring.webp') }}">ツンリング</option>
-            <option value="tun_belt" data-image="{{ url_for('static', filename='tun_belt.webp') }}">ツンベルト</option>
-            <option value="disto" data-image="{{ url_for('static', filename='disto.webp') }}">侵食</option>
-            <option value="narc" data-image="{{ url_for('static', filename='narc.webp') }}">ナク</option>
-            <option value="ruin_ring" data-image="{{ url_for('static', filename='ruin_ring.webp') }}">廃墟リング</option>
-            <option value="tun_ear" data-image="{{ url_for('static', filename='tun_ear.webp') }}">ツン耳</option>
-            <option value="tun_neck" data-image="{{ url_for('static', filename='tun_neck.webp') }}">ツンネク</option>
-            <option value="turo_belt" data-image="{{ url_for('static', filename='turo_belt.webp') }}">トゥーロベルト</option>
-            <option value="basi_belt" data-image="{{ url_for('static', filename='basi_belt.webp') }}">バジベルト</option>
-            <option value="centa_belt" data-image="{{ url_for('static', filename='centa_belt.webp') }}">ケンタベルト</option>
-            <option value="ominous_ring" data-image="{{ url_for('static', filename='ominous_ring.webp') }}">背後リング</option>
-            <option value="ogre_ring" data-image="{{ url_for('static', filename='ogre_ring.webp') }}">オガリン</option>
-            <option value="laytenn" data-image="{{ url_for('static', filename='laytenn.webp') }}">ライテン</option>
-            <option value="sicil" data-image="{{ url_for('static', filename='sicil.webp') }}">シチル</option>
-            <option value="dawn" data-image="{{ url_for('static', filename='dawn.webp') }}">黎明</option>
-            <option value="vaha" data-image="{{ url_for('static', filename='vaha.webp') }}">バア</option>
-            <option value="cadry" data-image="{{ url_for('static', filename='cadry.webp') }}">カドリー</option>
+      <div class="container">
+         <div class="form-container">
+            <form method="POST">
+               <label for="item">アクセ:</label>
+               <select name="item" id="item" class="select2">
+                  <option value="crescent" data-image="{{ url_for('static', filename='crescent.webp') }}">三日月リング</option>
+                  <option value="tun_ring" data-image="{{ url_for('static', filename='tun_ring.webp') }}">ツンリング</option>
+                  <option value="tun_belt" data-image="{{ url_for('static', filename='tun_belt.webp') }}">ツンベルト</option>
+                  <option value="disto" data-image="{{ url_for('static', filename='disto.webp') }}">侵食</option>
+                  <option value="narc" data-image="{{ url_for('static', filename='narc.webp') }}">ナク</option>
+                  <option value="ruin_ring" data-image="{{ url_for('static', filename='ruin_ring.webp') }}">廃墟リング</option>
+                  <option value="tun_ear" data-image="{{ url_for('static', filename='tun_ear.webp') }}">ツン耳</option>
+                  <option value="tun_neck" data-image="{{ url_for('static', filename='tun_neck.webp') }}">ツンネク</option>
+                  <option value="turo_belt" data-image="{{ url_for('static', filename='turo_belt.webp') }}">トゥーロベルト</option>
+                  <option value="basi_belt" data-image="{{ url_for('static', filename='basi_belt.webp') }}">バジベルト</option>
+                  <option value="centa_belt" data-image="{{ url_for('static', filename='centa_belt.webp') }}">ケンタベルト</option>
+                  <option value="ominous_ring" data-image="{{ url_for('static', filename='ominous_ring.webp') }}">背後リング</option>
+                  <option value="ogre_ring" data-image="{{ url_for('static', filename='ogre_ring.webp') }}">オガリン</option>
+                  <option value="laytenn" data-image="{{ url_for('static', filename='laytenn.webp') }}">ライテン</option>
+                  <option value="sicil" data-image="{{ url_for('static', filename='sicil.webp') }}">シチル</option>
+                  <option value="dawn" data-image="{{ url_for('static', filename='dawn.webp') }}">黎明</option>
+                  <option value="vaha" data-image="{{ url_for('static', filename='vaha.webp') }}">バア</option>
+                  <option value="cadry" data-image="{{ url_for('static', filename='cadry.webp') }}">カドリー</option>
             
-         </select>
-         <label for="item">強化段階:</label>
-         <select name="level" id="level">
-            <option value="pri">真1</option>
-            <option value="duo">真2</option>
-            <option value="tri">真3</option>
-         </select>
+               </select>
+               <label for="item">強化段階:</label>
+               <select name="level" id="level">
+                  <option value="pri">真1</option>
+                  <option value="duo">真2</option>
+                  <option value="tri">真3</option>
+               </select>
 
-         <label for="family-fame">家門名声:</label>
-         <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
-         <label class="checkbox-label" for="family_fame">7000以上</label>
+               <label for="family-fame">家門名声:</label>
+               <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
+               <label class="checkbox-label" for="family_fame">7000以上</label>
 
-         <label for="pp">プレパケ:</label>
-         <input type="checkbox" id="pp" name="pp" value="on" {% if pp %} checked{% endif %}>
-         <label class="checkbox-label" for="pp"></label>
+               <label for="pp">プレパケ:</label>
+               <input type="checkbox" id="pp" name="pp" value="on" {% if pp %} checked{% endif %}>
+               <label class="checkbox-label" for="pp"></label>
 
-         <br>
-         <br>
-         <input type="submit" value="表示">
-      </form>
-      {% if tap %}
-         <p>{{ name }}{{ level }}の強化期待値(シルバー)は{{ tap }}です。</p>
-      {% endif %}
+               <label for="marchant_ring">巨匠のリング:</label>
+               <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
+               <label class="checkbox-label" for="marchant_ring"></label>
 
-      {% if sell %}
-         <p>{{ name }}をそのまま売ると、売り上げ(シルバー)は{{ sell }}です。</p>
-      {% endif %}
+               <br>
+               <br>
+               <input type="submit" value="表示">
+            </form>
+         </div>
+         <div class="results-container">
+         {% if tap %}
+            <p>{{ name }}{{ level }}の強化期待値(シルバー)は{{ tap }}です。</p>
+         {% endif %}
+
+         {% if sell %}
+            <p>{{ name }}をそのまま売ると、売り上げ(シルバー)は{{ sell }}です。</p>
+         {% endif %}
+         </div>
+      </div>
 
       <!-- jQuery and Select2 JavaScript -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
