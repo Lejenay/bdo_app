@@ -37,10 +37,12 @@
             font-weight: bold;
             cursor: pointer;
             transition: opacity 0.2s;
-            margin-left: 10px;
+            margin-left: 10px;   
          }
-
-
+         
+         header .title {
+            font-weight: bold;
+         }
 
          header .name-hover {
             opacity: 0;
@@ -164,15 +166,41 @@
             text-decoration: none;
          }
 
+         .updates {
+         max-width: 600px;
+         margin: 30px auto;
+         padding: 20px;
+         background-color: #fff;
+         box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+         border-radius: 10px;
+         }
+
+         .updates h2 {
+         font-size: 20px;
+         text-align: center;
+         padding: 10px;
+         margin-bottom: 15px;
+         color: #4caf50;
+         }
+
+         .updates ul {
+         list-style-type: none;
+         padding: 0;
+         }
+
+         .updates li {
+         margin-bottom: 10px;
+         }
+
       </style>
    </head>
    <body>
       <header>
+         <span class="title">黒い砂漠 アクセ期待値 計算機</span>
          <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
             <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
-            <span class="name" id="header-name" onclick="location.reload();">れじぇない</span>
+            <span class="name" id="header-name" onclick="showAlert();">Powerd by れじぇない</span>
          </a>
-         <span>黒い砂漠 アクセ期待値 計算機</span>
       </header>
       <h1>手持ちのアクセを錬金しちゃおう！</h1>
       <div class="container">
@@ -180,31 +208,36 @@
             <form method="POST">
                <label for="item">アクセ:</label>
                <select name="item" id="item" class="select2">
-                  <option value="crescent" data-image="{{ url_for('static', filename='crescent.webp') }}">三日月リング</option>
-                  <option value="tun_ring" data-image="{{ url_for('static', filename='tun_ring.webp') }}">ツンリング</option>
-                  <option value="tun_belt" data-image="{{ url_for('static', filename='tun_belt.webp') }}">ツンベルト</option>
-                  <option value="disto" data-image="{{ url_for('static', filename='disto.webp') }}">侵食</option>
-                  <option value="narc" data-image="{{ url_for('static', filename='narc.webp') }}">ナク</option>
-                  <option value="ruin_ring" data-image="{{ url_for('static', filename='ruin_ring.webp') }}">廃墟リング</option>
-                  <option value="tun_ear" data-image="{{ url_for('static', filename='tun_ear.webp') }}">ツン耳</option>
-                  <option value="tun_neck" data-image="{{ url_for('static', filename='tun_neck.webp') }}">ツンネク</option>
-                  <option value="turo_belt" data-image="{{ url_for('static', filename='turo_belt.webp') }}">トゥーロベルト</option>
-                  <option value="basi_belt" data-image="{{ url_for('static', filename='basi_belt.webp') }}">バジベルト</option>
-                  <option value="centa_belt" data-image="{{ url_for('static', filename='centa_belt.webp') }}">ケンタベルト</option>
-                  <option value="ominous_ring" data-image="{{ url_for('static', filename='ominous_ring.webp') }}">背後リング</option>
-                  <option value="ogre_ring" data-image="{{ url_for('static', filename='ogre_ring.webp') }}">オガリン</option>
-                  <option value="laytenn" data-image="{{ url_for('static', filename='laytenn.webp') }}">ライテン</option>
-                  <option value="sicil" data-image="{{ url_for('static', filename='sicil.webp') }}">シチル</option>
-                  <option value="dawn" data-image="{{ url_for('static', filename='dawn.webp') }}">黎明</option>
-                  <option value="vaha" data-image="{{ url_for('static', filename='vaha.webp') }}">バア</option>
-                  <option value="cadry" data-image="{{ url_for('static', filename='cadry.webp') }}">カドリー</option>
-            
-               </select>
+                  {% for option in [('crescent', '三日月守護者のリング', 'crescent.webp'), 
+                  ('tun_ring', 'ツングラドのリング', 'tun_ring.webp'), 
+                  ('tun_belt', 'ツングラドのベルト', 'tun_belt.webp'), 
+                  ('disto', '黒い侵食のイヤリング', 'disto.webp'), 
+                  ('narc', 'ナクの耳飾り', 'narc.webp'), 
+                  ('ruin_ring', '廃墟の瞳リング', 'ruin_ring.webp'), 
+                  ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'), 
+                  ('tun_neck', 'ツングラドのネックレス', 'tun_neck.webp'), 
+                  ('turo_belt', 'トゥーロのベルト', 'turo_belt.webp'), 
+                  ('basi_belt', 'バジリスクのベルト', 'basi_belt.webp'), 
+                  ('centa_belt', 'ケンタウロスのベルト', 'centa_belt.webp'), 
+                  ('ominous_ring', '不気味な背後のリング', 'ominous_ring.webp'), 
+                  ('ogre_ring', 'オーガのリング', 'ogre_ring.webp'), 
+                  ('laytenn', 'ライテンの動力石', 'laytenn.webp'), 
+                  ('sicil', 'シチルのネックレス', 'sicil.webp'), 
+                  ('dawn', '黎明のイヤリング', 'dawn.webp'), 
+                  ('vaha', 'バアの暁', 'vaha.webp'), 
+                  ('cadry', 'カドリー守護者のリング', 'cadry.webp'),
+                  ('valt_belt', 'バルタラの隠れた光ベルト', 'valt_belt.webp')] %}
+                    <option value="{{ option[0] }}" data-image="{{ url_for('static', filename=option[2]) }}"
+                    {% if selected_item == option[0] %}selected{% endif %}>{{ option[1] }}</option>
+                  {% endfor %}
+                </select>
+               
                <label for="item">強化段階:</label>
                <select name="level" id="level">
-                  <option value="pri">真1</option>
-                  <option value="duo">真2</option>
-                  <option value="tri">真3</option>
+                  {% for option in [('pri', '真1'), ('duo', '真2'), ('tri', '真3')] %}
+                    <option value="{{ option[0] }}"
+                    {% if selected_level == option[0] %}selected{% endif %}>{{ option[1] }}</option>
+                  {% endfor %}
                </select>
 
                <label for="family-fame">家門名声:</label>
@@ -226,14 +259,22 @@
          </div>
          <div class="results-container">
          {% if tap %}
-            <p>{{ name }}{{ level }}の強化期待値(シルバー)は{{ tap }}です。</p>
+            <p>{{ name }}{{ level }}の強化期待値は{{ tap }}シルバーです。</p>
          {% endif %}
 
          {% if sell %}
-            <p>{{ name }}をそのまま売ると、売り上げ(シルバー)は{{ sell }}です。</p>
+            <p>{{ name }}をそのまま売ると、売り上げは{{ sell }}シルバーです。</p>
          {% endif %}
          </div>
       </div>
+      <section class="updates">
+         <h2>アップデート情報</h2>
+            <ul>
+               {% for update in updates %}
+                  <li><strong>{{ update.date }}:</strong> {{ update.info }}</li>
+               {% endfor %}
+            </ul>
+      </section>
 
       <!-- jQuery and Select2 JavaScript -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -257,26 +298,11 @@
                templateSelection: formatOption,
                escapeMarkup: function(m) { return m; }
             });
-
-            var nameElement = $('header .name');
-            nameElement.on('mouseover', function() {
-               setTimeout(function() {
-                  nameElement.css('color', '#fff');
-               }, 300);
-            });
-
-            nameElement.on('mouseout', function() {
-               nameElement.css('color', 'transparent');
-            });
-
-            $('#header-name').on('mouseenter', function() {
-               $(this).addClass('name-hover');
-               setTimeout(() => {
-                  $(this).removeClass('name-hover');
-               }, 200);
-
-            });
          });
+
+         function showAlert() {
+            alert("パワー！💪 ハッ😁");
+         }
       </script>
    </body>
 </html>

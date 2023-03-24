@@ -73,6 +73,7 @@ sicil = acc_api_call(11625)
 dawn = acc_api_call(11855)
 vaha = acc_api_call(11875)
 cadry = acc_api_call(12032)
+valt_belt = acc_api_call(12236)
 
 # tax // hopefully, set depending on family fame
 
@@ -96,7 +97,8 @@ def ja_name(item):
         'sicil': 'シチル',
         'dawn': '黎明',
         'vaha': 'バア',
-        'cadry': 'カドリー'
+        'cadry': 'カドリー',
+        'valt_belt': 'バルタラ'
     }
 
     if item in accessories.keys():
@@ -160,6 +162,30 @@ def acc_tri(acc, tax):
 
     return str_tri_expected_value, str_base_sell
 
+updates = [
+    {
+        'date': '2023-03-24',
+        'info': 'バルタラベルトを追加しました。'
+    },
+    {
+        'date': '2023-03-24',
+        'info': 'フォーム送信後もアクセと強化段階を保持するように変更しました。'
+    },
+    {
+        'date': '2023-03-24',
+        'info': 'アップデート情報機能を追加しました。'
+    },
+    {
+        'date': '2023-03-23',
+        'info': 'プレパケと巨匠のリングのオプションを追加しました。'
+    },
+    {
+        'date': '2023-03-23',
+        'info': 'ページを公開しました。'
+    },
+]
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     tap = None
@@ -170,9 +196,13 @@ def index():
     family_fame = False
     pp = False
     marchant_ring = False
+    selected_item = None
+    selected_level = None
     if request.method == 'POST':
         item = request.form['item']
         level = request.form['level']
+        selected_item = item
+        selected_level = level
         family_fame = "family_fame" in request.form
         pp = "pp" in request.form
         marchant_ring = "marchant_ring" in request.form
@@ -204,7 +234,8 @@ def index():
         'sicil': sicil,
         'dawn': dawn,
         'vaha': vaha,
-        'cadry': cadry
+        'cadry': cadry,
+        'valt_belt': valt_belt
     }
 
     # 強化レベルと関数のマッピング
@@ -226,7 +257,9 @@ def index():
     level = ja_level_name(level)
 
     return render_template('index.html', tap=tap, sell=sell, name=name, level=level,
-                            family_fame=family_fame, pp=pp, marchant_ring=marchant_ring)
+                            family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
+                            selected_item=selected_item, selected_level=selected_level, 
+                            updates=updates)
 
 @app.context_processor
 def override_url_for():
