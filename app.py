@@ -133,7 +133,7 @@ def acc_pri(acc, tax):
     '''
 
 def acc_duo(acc, tax):
-    try2_stack_cost = (280 + 31) * bs_armour
+    try2_stack_cost = (150 + 31) * bs_armour
     try1_stack_cost = 31 * bs_armour
     s2_chance = 0.7*0.5
     s1f1_chance = 0.7*0.5
@@ -147,8 +147,8 @@ def acc_duo(acc, tax):
     return str_duo_expected_value, str_base_sell
 
 def acc_tri(acc, tax):
-    try3_stack_cost = (480 + 280 + 31) * bs_armour
-    try2_stack_cost = (280 + 31) * bs_armour
+    try3_stack_cost = (200 + 150 + 31) * bs_armour
+    try2_stack_cost = (150 + 31) * bs_armour
     try1_stack_cost = 31 * bs_armour
     s3_chance = 0.7*0.5*0.41
     s2f1_chance = 0.7*0.5*0.59
@@ -165,7 +165,7 @@ def acc_tri(acc, tax):
 updates = [
     {
         'date': '2023-03-24',
-        'info': 'バルタラベルトを追加しました。'
+        'info': 'アクセを追加しました。'
     },
     {
         'date': '2023-03-24',
@@ -173,7 +173,7 @@ updates = [
     },
     {
         'date': '2023-03-24',
-        'info': 'アップデート情報機能を追加しました。'
+        'info': 'アップデート情報と計算方法のセクションを追加しました。'
     },
     {
         'date': '2023-03-23',
