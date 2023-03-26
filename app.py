@@ -74,8 +74,9 @@ dawn = acc_api_call(11855)
 vaha = acc_api_call(11875)
 cadry = acc_api_call(12032)
 valt_belt = acc_api_call(12236)
-
-# tax // hopefully, set depending on family fame
+ethereal = acc_api_call(11856)
+lunar = acc_api_call(11663)
+river = acc_api_call(11662)
 
 
 def ja_name(item):
@@ -98,7 +99,10 @@ def ja_name(item):
         'dawn': '黎明',
         'vaha': 'バア',
         'cadry': 'カドリー',
-        'valt_belt': 'バルタラ'
+        'valt_belt': 'バルタラ',
+        'lunar': '月ネックレス',
+        'river': '川ネックレス',
+        'ethereal': '夢幻イヤリング'
     }
 
     if item in accessories.keys():
@@ -108,7 +112,8 @@ def ja_level_name(level):
     lv = {
         'pri': '真1',
         'duo': '真2',
-        'tri': '真3'
+        'tri': '真3',
+        'tet': '真4'
     }
 
     if level in lv.keys():
@@ -162,14 +167,50 @@ def acc_tri(acc, tax):
 
     return str_tri_expected_value, str_base_sell
 
+def acc_tet(acc, tax):
+    try4_stack_cost = (1000 + 200 + 150 + 31)* bs_armour
+    try3_stack_cost = (200 + 150 + 31) * bs_armour
+    try2_stack_cost = (150 + 31) * bs_armour
+    try1_stack_cost = 31 * bs_armour
+
+    # straight
+    s4_chance = 0.7*0.5*0.41*0.3
+    # tri then fail
+    s3f1_chance = 0.7*0.5*0.41*0.7
+    # duo then fail, sell 1
+    s2f1_chance = 0.7*0.5*0.59
+    # pri then fail, then pri
+    s1f1s1_chance = 0.7*0.5*0.7
+    # pri then fail, then fail
+    s1f1f1_chance = 0.7*0.5*0.3
+    # #fail then duo
+    f1s2_chance = 0.3*0.7*0.5
+    # fail then pri, then fail
+    f1s1f1_chance = 0.3*0.7*0.5
+    # fail, fail, sell 1
+    f2s1_chance = 0.3*0.3
+
+    tet_expected_value = round(((acc[4]*tax - try4_stack_cost)* s4_chance) +
+                                ((0 - try4_stack_cost)* s3f1_chance) + 
+                                ((acc[0]*tax - try2_stack_cost)* s2f1_chance) +
+                                ((acc[1]*tax - try1_stack_cost*2)* s1f1s1_chance) + 
+                                ((0 - try1_stack_cost*2)* s1f1f1_chance) + 
+                                ((acc[2]*tax - try2_stack_cost)* f1s2_chance) +
+                                ((0 - try1_stack_cost)* f1s1f1_chance) +
+                                ((acc[0]*tax)* f2s1_chance)
+                                )
+    str_tet_expected_value = '{:,}'.format(tet_expected_value)
+
+    base_sell = round((acc[0]*5) *tax)
+    str_base_sell = '{:,}'.format(base_sell)
+
+    return str_tet_expected_value, str_base_sell
+
+
 updates = [
     {
-        'date': '2023-03-24',
-        'info': 'アクセを追加しました。'
-    },
-    {
-        'date': '2023-03-24',
-        'info': 'フォーム送信後もアクセと強化段階を保持するように変更しました。'
+        'date': '2023-03-26',
+        'info': '真4の期待値計算とアクセサリーを追加しました。'
     },
     {
         'date': '2023-03-24',
@@ -235,14 +276,18 @@ def index():
         'dawn': dawn,
         'vaha': vaha,
         'cadry': cadry,
-        'valt_belt': valt_belt
+        'valt_belt': valt_belt,
+        'lunar': lunar,
+        'river': river,
+        'ethereal': ethereal
     }
 
     # 強化レベルと関数のマッピング
     enhancement_funcs = {
         'pri': acc_pri,
         'duo': acc_duo,
-        'tri': acc_tri
+        'tri': acc_tri,
+        'tet': acc_tet
     }
 
     # 選択されたアクセサリーと強化関数を取得

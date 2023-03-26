@@ -241,25 +241,31 @@
             <form method="POST">
                <label for="item">アクセ:</label>
                <select name="item" id="item" class="select2">
-                  {% for option in [('crescent', '三日月守護者のリング', 'crescent.webp'), 
-                  ('tun_ring', 'ツングラドのリング', 'tun_ring.webp'), 
-                  ('tun_belt', 'ツングラドのベルト', 'tun_belt.webp'), 
-                  ('disto', '黒い侵食のイヤリング', 'disto.webp'), 
-                  ('narc', 'ナクの耳飾り', 'narc.webp'), 
+                  {% for option in [
+                  ('crescent', '三日月守護者のリング', 'crescent.webp'),
                   ('ruin_ring', '廃墟の瞳リング', 'ruin_ring.webp'), 
-                  ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'), 
-                  ('tun_neck', 'ツングラドのネックレス', 'tun_neck.webp'), 
-                  ('turo_belt', 'トゥーロのベルト', 'turo_belt.webp'), 
-                  ('basi_belt', 'バジリスクのベルト', 'basi_belt.webp'), 
-                  ('centa_belt', 'ケンタウロスのベルト', 'centa_belt.webp'), 
-                  ('ominous_ring', '不気味な背後のリング', 'ominous_ring.webp'), 
-                  ('ogre_ring', 'オーガのリング', 'ogre_ring.webp'), 
-                  ('laytenn', 'ライテンの動力石', 'laytenn.webp'), 
-                  ('sicil', 'シチルのネックレス', 'sicil.webp'), 
-                  ('dawn', '黎明のイヤリング', 'dawn.webp'), 
-                  ('vaha', 'バアの暁', 'vaha.webp'), 
+                  ('tun_ring', 'ツングラドのリング', 'tun_ring.webp'),
+                  ('ominous_ring', '不気味な背後のリング', 'ominous_ring.webp'),
                   ('cadry', 'カドリー守護者のリング', 'cadry.webp'),
-                  ('valt_belt', 'バルタラの隠れた光ベルト', 'valt_belt.webp')] %}
+                  ('ogre_ring', 'オーガのリング', 'ogre_ring.webp'),
+                  ('laytenn', 'ライテンの動力石', 'laytenn.webp'),
+                  ('tun_neck', 'ツングラドのネックレス', 'tun_neck.webp'),
+                  ('lunar', '目覚めた月のネックレス', 'lunar.webp'),
+                  ('river', '目覚めた川のネックレス', 'river.webp'),
+                  ('sicil', 'シチルのネックレス', 'sicil.webp'),
+                  ('basi_belt', 'バジリスクのベルト', 'basi_belt.webp'),
+                  ('valt_belt', 'バルタラの隠れた光ベルト', 'valt_belt.webp'),
+                  ('tun_belt', 'ツングラドのベルト', 'tun_belt.webp'),
+                  ('centa_belt', 'ケンタウロスのベルト', 'centa_belt.webp'),
+                  ('orkin_belt', 'オルキンラドのベルト', 'orkin_belt.webp'),
+                  ('turo_belt', 'トゥーロのベルト', 'turo_belt.webp'),
+                  ('disto', '黒い侵食のイヤリング', 'disto.webp'),
+                  ('vaha', 'バアの暁', 'vaha.webp'),
+                  ('narc', 'ナクの耳飾り', 'narc.webp'), 
+                  ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'),
+                  ('dawn', '黎明のイヤリング', 'dawn.webp'),
+                  ('ethereal', '夢幻のイヤリング', 'ethereal.webp')
+                  ] %}
                     <option value="{{ option[0] }}" data-image="{{ url_for('static', filename=option[2]) }}"
                     {% if selected_item == option[0] %}selected{% endif %}>{{ option[1] }}</option>
                   {% endfor %}
@@ -267,7 +273,7 @@
                
                <label for="item">強化段階:</label>
                <select name="level" id="level">
-                  {% for option in [('pri', '真1'), ('duo', '真2'), ('tri', '真3')] %}
+                  {% for option in [('pri', '真1'), ('duo', '真2'), ('tri', '真3'), ('tet', '真4')] %}
                     <option value="{{ option[0] }}"
                     {% if selected_level == option[0] %}selected{% endif %}>{{ option[1] }}</option>
                   {% endfor %}
@@ -314,7 +320,7 @@
                      <li>下のコードで例として真2の計算を表示しています</li>
                      <li>アクセの価格は取引所apiから取得</li>
                      <li>スタック費用は防具ブラックストーンで計算</br>
-                     真1: 31個 (fs: 18), 真2: 150個 (fs: 40), 真3: 200個 (fs: 45)</li>
+                     真1: 31個 (fs: 18), 真2: 150個 (fs: 40), 真3: 200個 (fs: 45), 真4: 1000個 (fs: 110)</li>
                      <li>個数はかなり適当、利益にあまり影響しないからOK(?)</li>
                   </ul>
                   <div class="gist">
