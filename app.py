@@ -77,6 +77,7 @@ valt_belt = acc_api_call(12236)
 ethereal = acc_api_call(11856)
 lunar = acc_api_call(11663)
 river = acc_api_call(11662)
+orkin_belt = acc_api_call(12251)
 
 
 def ja_name(item):
@@ -102,7 +103,8 @@ def ja_name(item):
         'valt_belt': 'バルタラ',
         'lunar': '月ネックレス',
         'river': '川ネックレス',
-        'ethereal': '夢幻イヤリング'
+        'ethereal': '夢幻イヤリング',
+        'orkin_belt': 'オルキンベルト' 
     }
 
     if item in accessories.keys():
@@ -113,7 +115,8 @@ def ja_level_name(level):
         'pri': '真1',
         'duo': '真2',
         'tri': '真3',
-        'tet': '真4'
+        'tet': '真4',
+        'pen': '真5'
     }
 
     if level in lv.keys():
@@ -168,7 +171,7 @@ def acc_tri(acc, tax):
     return str_tri_expected_value, str_base_sell
 
 def acc_tet(acc, tax):
-    try4_stack_cost = (1000 + 200 + 150 + 31)* bs_armour
+    try4_stack_cost = (2000 + 200 + 150 + 31)* bs_armour
     try3_stack_cost = (200 + 150 + 31) * bs_armour
     try2_stack_cost = (150 + 31) * bs_armour
     try1_stack_cost = 31 * bs_armour
@@ -206,8 +209,70 @@ def acc_tet(acc, tax):
 
     return str_tet_expected_value, str_base_sell
 
+def acc_pen(acc, tax):
+    try5_stack_cost = (20000)
+    try4_stack_cost = (2000 + 200 + 150 + 31)* bs_armour
+    try3_stack_cost = (200 + 150 + 31) * bs_armour
+    try2_stack_cost = (150 + 31) * bs_armour
+    try1_stack_cost = 31 * bs_armour
+
+    # straight
+    s5_chance = 0.7*0.5*0.41*0.3*0.115
+    # tet then fail
+    s4f1_chance = 0.7*0.5*0.41*0.3*0.885
+    # tri then fail tet chal, then sell 1
+    s3f1_chance = 0.7*0.5*0.41*0.7
+    # duo then fail, then duo
+    s2f1s2_chance = 0.7*0.5*0.59*0.7*0.5
+    # duo then fail, then fail, sell 1
+    s2f2_chance = 0.7*0.5*0.59*0.3
+    # duo then fail, then pri, then fail duo chal
+    s2f1s1f1_chance = 0.7*0.5*0.59*0.7*0.5
+    # pri then fail, duo
+    s1f1s2_chance = 0.7*0.5*0.7*0.5
+    # pri then fail, pri then fail
+    s1f1s1f1_chance = 0.7*0.5*0.7*0.5
+    # pri then fail, fail, sell 1
+    s1f2_chance = 0.7*0.5*0.3
+    # fail, then tri
+    f1s3_chance = 0.3*0.7*0.5*0.41
+    # fail, then duo, then fail
+    f1s2f1_chance = 0.3*0.7*0.5*0.59
+    # fail, then pri, then fail sell 1
+    f1s1f1_chance = 0.3*0.7*0.5
+    # fail, fail, pri
+    f2s1_chance = 0.3*0.3*0.7
+    # fail, fail, fail
+    f3_chance = 0.3*0.3*0.3
+
+    pen_expected_value = round( ((acc[5]*tax - try5_stack_cost)*s5_chance) +
+                               ((0 - try5_stack_cost)*s4f1_chance) +
+                               ((acc[2]*tax - try2_stack_cost)*s3f1_chance) +
+                               ((acc[0]*tax - try3_stack_cost)*s2f1s2_chance) +
+                               ((acc[0]*tax - try2_stack_cost)*s2f2_chance) +
+                               ((0 - try2_stack_cost - try1_stack_cost)*s2f1s1f1_chance) +
+                               ((acc[2]*tax - try2_stack_cost)*s1f1s2_chance) +
+                               ((0 - try1_stack_cost*2)*s1f1s1f1_chance) +
+                               ((acc[0]*tax - try1_stack_cost)*s1f2_chance) +
+                               ((acc[3]*tax - try3_stack_cost)*f1s3_chance) +
+                               ((0 - try2_stack_cost)*f1s2f1_chance) +
+                               ((acc[0]*tax - try1_stack_cost)*f1s1f1_chance) +
+                               ((acc[1]*tax - try1_stack_cost)*f2s1_chance) +
+                               ((0)*f3_chance)
+                            )
+    str_pen_expected_value = '{:,}'.format(pen_expected_value)
+
+    base_sell = round((acc[0]*6) *tax)
+    str_base_sell = '{:,}'.format(base_sell)
+
+    return str_pen_expected_value, str_base_sell
+
 
 updates = [
+    {
+        'date': '2023-03-27',
+        'info': '真5の期待値計算とアクセサリーを追加しました。'
+    },
     {
         'date': '2023-03-26',
         'info': '真4の期待値計算とアクセサリーを追加しました。'
@@ -279,7 +344,8 @@ def index():
         'valt_belt': valt_belt,
         'lunar': lunar,
         'river': river,
-        'ethereal': ethereal
+        'ethereal': ethereal,
+        'orkin_belt': orkin_belt
     }
 
     # 強化レベルと関数のマッピング
@@ -287,7 +353,8 @@ def index():
         'pri': acc_pri,
         'duo': acc_duo,
         'tri': acc_tri,
-        'tet': acc_tet
+        'tet': acc_tet,
+        'pen': acc_pen
     }
 
     # 選択されたアクセサリーと強化関数を取得

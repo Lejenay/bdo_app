@@ -273,7 +273,7 @@
                
                <label for="item">強化段階:</label>
                <select name="level" id="level">
-                  {% for option in [('pri', '真1'), ('duo', '真2'), ('tri', '真3'), ('tet', '真4')] %}
+                  {% for option in [('pri', '真1'), ('duo', '真2'), ('tri', '真3'), ('tet', '真4'), ('pen', '真5')] %}
                     <option value="{{ option[0] }}"
                     {% if selected_level == option[0] %}selected{% endif %}>{{ option[1] }}</option>
                   {% endfor %}
@@ -320,8 +320,8 @@
                      <li>下のコードで例として真2の計算を表示しています</li>
                      <li>アクセの価格は取引所apiから取得</li>
                      <li>スタック費用は防具ブラックストーンで計算</br>
-                     真1: 31個 (fs: 18), 真2: 150個 (fs: 40), 真3: 200個 (fs: 45), 真4: 1000個 (fs: 110)</li>
-                     <li>個数はかなり適当、利益にあまり影響しないからOK(?)</li>
+                     真1: 31個 (fs: 18), 真2: 150個 (fs: 40), 真3: 200個 (fs: 45), 真4: 2000個 (fs: 110), 真5: 20000個 (fs: 220?)</li>
+                     <li>個数はかなり適当、その裁量が鍵ではあるが...</li>
                   </ul>
                   <div class="gist">
                      <script src="https://gist.github.com/Lejenay/181beb6c19fb51051102dc2637f7e860.js"></script>
