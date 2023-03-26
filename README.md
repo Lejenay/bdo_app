@@ -1,6 +1,4 @@
 # bdo_app
-some helpful apps for bdo(black desert online) life
-
-all apps are for my personal web apps
+calculate the expected value of in game aaccessories enhancement :D
 
 virtual environment is in venv file
