@@ -4,7 +4,7 @@
       <meta name="description" content="MMOPRG,黒い砂漠のアクセサリー強化において、強化したほうが儲けが出るのか、そのまま売ったほうが良いのかを考察できる計算機です。絶賛開発中。" />
       <link rel="apple-touch-icon" type="image/png" href="{{ url_for('static', filename='apple-touch-icon-180x180.png') }}">
       <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon-192x192.png') }}">
-      <title>黒い砂漠 アクセ期待値計算機</title>
+      <title>{% block title %}アクセ期待値計算機{% endblock %}</title>
       
       <!-- Select2 CSS -->
       <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
@@ -13,7 +13,6 @@
          body {
             font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
             background-color: #e9f7ef;
-            color: #333;
             line-height: 1.6;
             margin: 0;
             padding: 0;
@@ -26,6 +25,8 @@
             background-color: #4caf50;
             padding: 15px;
             color: #fff;
+            padding-bottom: 45px;
+            position: relative;
          }
 
          header img {
@@ -48,10 +49,55 @@
             opacity: 0;
          }
 
+         nav {
+            position: relative;
+            bottom: -35px;
+            right: 0;
+            margin-top: -35px;
+         }
+
+         nav ul {
+            display: flex;
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+            background-color: #4caf50;
+            border-radius: 0 0 5px 5px;
+         }
+
+         nav ul li {
+            margin-right: 20px;
+            padding: 10px;
+            background-color: #4caf50;
+            border-radius: 5px;
+         }
+
+         nav ul li:last-child {
+            margin-right: 0;
+         }
+
+         nav ul li a {
+            color: #ffffff !important;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            padding: 10px 15px;
+            display: inline-block;
+         }
+
+         nav ul li a:hover {
+            background-color: #3e8e41;
+            border-radius: 5px;
+         }
+
+         nav ul li:last-child {
+            margin-right: 0;
+         }
+
          h1 {
             font-size: 24px;
             text-align: center;
             padding: 20px;
+            margin-top: 70px;
             margin-bottom: 30px;
             color: #4caf50;
          }
@@ -102,7 +148,7 @@
             color: #fff;
             border: none;
             font-size: 1rem;
-            cursor: pointer;
+             cursor: pointer;
             border-radius: 5px;
             margin-top: 20px;
          }
@@ -168,7 +214,7 @@
 
          .updates {
             max-width: 600px;
-            margin: 30px auto;
+            margin: 70px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -198,7 +244,7 @@
          
          .calculation-method {
             max-width: 600px;
-            margin: 30px auto;
+            margin: 70px auto;
             padding: 20px;
             background-color: #fff;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -224,7 +270,6 @@
             margin-bottom: 5px;
             margin-top: 5px;
          }
-
       </style>
    </head>
    <body>
@@ -235,6 +280,14 @@
             <span class="name" id="header-name" onclick="showAlert();">Powerd by れじぇない</span>
          </a>
       </header>
+      <nav>
+         <ul>
+            <li><a href="{{ url_for('index')}}">アクセ期待値計算機</a></li>
+            <li><a href="{{ url_for('updates')}}">アップデート</a></li>
+            <li><a href="{{ url_for('how_to_calc')}}">計算方法</a></li>
+         </ul>
+      </nav>
+      {% block contents%}
       <h1>手持ちのアクセを錬金しちゃおう！</h1>
       <div class="container">
          <div class="form-container">
@@ -306,28 +359,7 @@
          {% endif %}
          </div>
       </div>
-               <section class="updates">
-                  <h2>アップデート情報</h2>
-                  <ul>
-                     {% for update in updates %}
-                        <li><strong>{{ update.date }}:</strong> {{ update.info }}</li>
-                     {% endfor %}
-                  </ul>
-               </section>
-               <section class="calculation-method">
-                  <h3>計算方法</h3>
-                  <ul>
-                     <li>下のコードで例として真2の計算を表示しています</li>
-                     <li>アクセの価格は取引所apiから取得</li>
-                     <li>スタック費用は防具ブラックストーンで計算</br>
-                     真1: 31個 (fs: 18), 真2: 150個 (fs: 40), 真3: 200個 (fs: 45), 真4: 2000個 (fs: 110), 真5: 20000個 (fs: 220?)</li>
-                     <li>個数はかなり適当、その裁量が鍵ではあるが...</li>
-                  </ul>
-                  <div class="gist">
-                     <script src="https://gist.github.com/Lejenay/181beb6c19fb51051102dc2637f7e860.js"></script>
-                  </div>
-               </section>
-
+      {% endblock %}         
 
 
       <!-- jQuery and Select2 JavaScript -->

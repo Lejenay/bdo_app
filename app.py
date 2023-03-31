@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, redirect
 import re
 import requests
 import os
@@ -262,32 +262,11 @@ def acc_pen(acc, tax):
 
     return str_pen_expected_value, str_base_sell
 
-
-updates = [
-    {
-        'date': '2023-03-27',
-        'info': '真5の期待値計算とアクセサリーを追加しました。'
-    },
-    {
-        'date': '2023-03-26',
-        'info': '真4の期待値計算とアクセサリーを追加しました。'
-    },
-    {
-        'date': '2023-03-24',
-        'info': 'アップデート情報と計算方法のセクションを追加しました。'
-    },
-    {
-        'date': '2023-03-23',
-        'info': 'プレパケと巨匠のリングのオプションを追加しました。'
-    },
-    {
-        'date': '2023-03-23',
-        'info': 'ページを公開しました。'
-    },
-]
-
-
 @app.route('/', methods=['GET', 'POST'])
+def index_root():
+    return redirect(url_for('index'))
+
+@app.route('/acc-enhancing', methods=['GET', 'POST'])
 def index():
     tap = None
     sell = None
@@ -367,6 +346,38 @@ def index():
                             family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
                             selected_item=selected_item, selected_level=selected_level, 
                             updates=updates)
+
+@app.route('/updates', methods=['GET', 'POST'])
+def updates():
+
+    updates = [
+    {
+        'date': '2023-03-27',
+        'info': '真5の期待値計算とアクセサリーを追加しました。'
+    },
+    {
+        'date': '2023-03-26',
+        'info': '真4の期待値計算とアクセサリーを追加しました。'
+    },
+    {
+        'date': '2023-03-24',
+        'info': 'アップデート情報と計算方法のセクションを追加しました。'
+    },
+    {
+        'date': '2023-03-23',
+        'info': 'プレパケと巨匠のリングのオプションを追加しました。'
+    },
+    {
+        'date': '2023-03-23',
+        'info': 'ページを公開しました。'
+    },
+]
+    
+    return render_template('updates.html', updates=updates)
+
+@app.route('/how-to-calc', methods=['GET', 'POST'])
+def how_to_calc():
+    return render_template('how-to-calc.html')
 
 @app.context_processor
 def override_url_for():

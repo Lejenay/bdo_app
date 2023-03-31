@@ -1,0 +1,17 @@
+{%extends 'index.html'%}
+
+{%block title%}
+アップデート
+{%endblock%}
+
+{%block contents%}
+<section class="updates">
+    <h2>アップデート情報</h2>
+    <ul>
+       {% for update in updates %}
+          <li><strong>{{ update.date }}:</strong> {{ update.info }}</li>
+       {% endfor %}
+    </ul>
+ </section>
+{%endblock%}
+
