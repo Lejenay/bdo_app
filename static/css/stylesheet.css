@@ -256,3 +256,8 @@
             margin-bottom: 5px;
             margin-top: 5px;
          }
+
+         .calculation-method ul li a {
+            color:#0044CC;
+            text-decoration: underline;
+         }
