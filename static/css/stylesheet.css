@@ -38,7 +38,7 @@
          }
 
          footer {
-            background-color: #333333d3;
+            background-color: #333333d3 !important;
             color: #fff;
             padding: 20px;
             text-align: center;
@@ -47,6 +47,7 @@
 
          .footer-text {
             box-shadow: none;
+            background-color: inherit !important;
          }
 
          .footer-container {
@@ -189,6 +190,7 @@
             padding: 20px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
+            background-color: #fff;
          }
 
          input[type="checkbox"] {
