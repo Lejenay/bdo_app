@@ -1,4 +1,4 @@
 # bdo_app
-calculate the expected value of in game aaccessories enhancement
+calculate the expected value of in game accessories enhancement
 
 virtual environment is in venv file
