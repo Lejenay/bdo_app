@@ -16,7 +16,7 @@
          <a href="{{ url_for('index')}}" class="title">黒い砂漠 便利アプリ</a>
          <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
             <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
-            <span class="name" id="header-name" onclick="showAlert();">Powerd by れじぇない</span>
+            <span class="name" id="header-name">Powerd by れじぇない</span>
          </a>
       </header>
       <nav>
@@ -27,6 +27,7 @@
          </ul>
       </nav>
       {% block contents%}
+      <main>
       <h1>手持ちのアクセを錬金しちゃおう！</h1>
       <div class="container">
          <div class="form-container">
@@ -98,8 +99,17 @@
          {% endif %}
          </div>
       </div>
+      </main>
       {% endblock %}         
-
+      
+      <footer>
+         <div class="footer-container">
+            <p class="footer-text">© 2023 れじぇない. All rights reserved.</p>
+            <a href="https://github.com/Lejenay/bdo_app" target="_blank">
+               <img src="{{ url_for('static', filename='github-mark-white.png') }}" alt="GitHub" class="github-icon">
+            </a>
+         </div>
+      </footer>
 
       <!-- jQuery and Select2 JavaScript -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -124,10 +134,6 @@
                escapeMarkup: function(m) { return m; }
             });
          });
-
-         function showAlert() {
-            alert("パワー！💪 ハッ😁");
-         }
       </script>
    </body>
 </html>
