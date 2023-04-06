@@ -131,19 +131,30 @@
          input[type="submit"] {
             display: block;
             width: 100%;
-            padding: 10px;
-            background-color: #4caf50;
-            color: #fff;
-            border: none;
+            padding: 18px 60px;  
+            border-radius:30px;
+            text-decoration: none;
+            border:1px solid #fff;
+            color: #ffffff;
+            outline: none;
             font-size: 1rem;
-             cursor: pointer;
-            border-radius: 5px;
+            background-color: #4caf50;
+            cursor: pointer;
             margin-top: 20px;
+            /*アニメーションの指定*/ 
+            transition: all 0.4s ease-out;
          }
 
          input[type="submit"]:hover {
-            background-color: #3e8e41;
+            border-color:transparent;
+            color: #fff;
+            background: linear-gradient(270deg, #4caf50 0%, #ceee41 50%, #17742b 100%);
+            background-size: 200% auto;
+            background-position: right center;
+            font-size: 1rem;
+            box-shadow: 0 5px 10px rgba(108, 250, 120, 0.4);
          }
+
 
          p {
             max-width: 600px;

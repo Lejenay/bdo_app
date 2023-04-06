@@ -47,7 +47,7 @@ def item_api_call(item_id):
 
 tax = 0.8547
 
-# DB // SQLってなに
+# DB // SQLを導入したいですまる
 bs_armour = item_api_call(16002)
 bs_wepon = item_api_call(16001)
 crescent = acc_api_call(12031)
