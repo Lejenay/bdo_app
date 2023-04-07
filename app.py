@@ -45,8 +45,6 @@ def item_api_call(item_id):
     del res_list[-1]
     return int(res_list[3])
 
-tax = 0.8547
-
 # DB // SQLを導入したいですまる
 bs_armour = item_api_call(16002)
 bs_wepon = item_api_call(16001)
@@ -262,11 +260,88 @@ def acc_pen(acc, tax):
 
     return str_pen_expected_value, str_base_sell
 
+def acc_pri_v2(acc, tax):
+    success_chance = 0.7
+    fail_chance = 0.3
+    try1_stack_cost = 31 * bs_armour
+
+    pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0]*2)*fail_chance))
+    str_pri_expected_value = '{:,}'.format(pri_expected_value)
+
+    return str_pri_expected_value
+
+def acc_duo_v2(acc, tax):
+    success_chance = 0.5
+    fail_chance = 0.5
+    try2_stack_cost = 150 * bs_armour
+
+    duo_expected_value = round( ((acc[2]*tax - try2_stack_cost)*success_chance) - ((acc[1] + acc[0])*fail_chance) )
+    str_duo_expected_value = '{:,}'.format(duo_expected_value)
+
+    return str_duo_expected_value
+
+def acc_tri_v2(acc, tax):
+    success_chance = 0.41
+    fail_chance = 0.59
+    try3_stack_cost = 200 * bs_armour
+
+    tri_expected_value = round( ((acc[3]*tax - try3_stack_cost)*success_chance) - ((acc[2] + acc[0])*fail_chance) )
+    str_tri_expected_value = '{:,}'.format(tri_expected_value)
+
+    return str_tri_expected_value
+
+def acc_tet_v2(acc, tax):
+    success_chance = 0.3
+    fail_chance = 0.7
+    try4_stack_cost = 2000 * bs_armour
+
+    tet_expected_value = round( ((acc[4]*tax - try4_stack_cost)*success_chance) - ((acc[3] + acc[0])*fail_chance) )
+    str_tet_expected_value = '{:,}'.format(tet_expected_value)
+
+    return str_tet_expected_value
+
+def acc_pen_v2(acc, tax):
+    success_chance = 0.115
+    fail_chance = 0.885
+    try5_stack_cost = 20000 * bs_armour
+
+    pen_expected_value = round( ((acc[5]*tax - try5_stack_cost)*success_chance) - ((acc[4] + acc[0])*fail_chance) )
+    str_pen_expected_value = '{:,}'.format(pen_expected_value)
+
+    return str_pen_expected_value
+
+# アクセサリーと強化関数のマッピング
+accessories = {
+    'crescent': crescent,
+    'tun_ring': tun_ring,
+    'tun_belt': tun_belt,
+    'disto': disto,
+    'narc': narc,
+    'ruin_ring': ruin_ring,
+    'tun_ear': tun_ear,
+    'tun_neck': tun_neck,
+    'turo_belt': turo_belt,
+    'basi_belt': basi_belt,
+    'centa_belt': centa_belt,
+    'ominous_ring': ominous_ring,
+    'ogre_ring': ogre_ring,
+    'laytenn': laytenn,
+    'sicil': sicil,
+    'dawn': dawn,
+    'vaha': vaha,
+    'cadry': cadry,
+    'valt_belt': valt_belt,
+    'lunar': lunar,
+    'river': river,
+    'ethereal': ethereal,
+    'orkin_belt': orkin_belt
+}
+
 @app.route('/', methods=['GET', 'POST'])
 def index_root():
     return redirect(url_for('index'))
 
-@app.route('/acc-enhancing', methods=['GET', 'POST'])
+@app.route('/acc-enhancing-v1', methods=['GET', 'POST'])
 def index():
     tap = None
     sell = None
@@ -288,39 +363,11 @@ def index():
         marchant_ring = "marchant_ring" in request.form
         tax = 0.6533
         if family_fame:
-            tax = tax + 0.065
+            tax += 0.065
         if pp:
-            tax = tax + 0.1949
+            tax += 0.1949
         if marchant_ring:
-            tax = tax + 0.0325
-
-
-    # アクセサリーと強化関数のマッピング
-    accessories = {
-        'crescent': crescent,
-        'tun_ring': tun_ring,
-        'tun_belt': tun_belt,
-        'disto': disto,
-        'narc': narc,
-        'ruin_ring': ruin_ring,
-        'tun_ear': tun_ear,
-        'tun_neck': tun_neck,
-        'turo_belt': turo_belt,
-        'basi_belt': basi_belt,
-        'centa_belt': centa_belt,
-        'ominous_ring': ominous_ring,
-        'ogre_ring': ogre_ring,
-        'laytenn': laytenn,
-        'sicil': sicil,
-        'dawn': dawn,
-        'vaha': vaha,
-        'cadry': cadry,
-        'valt_belt': valt_belt,
-        'lunar': lunar,
-        'river': river,
-        'ethereal': ethereal,
-        'orkin_belt': orkin_belt
-    }
+            tax += 0.0325
 
     # 強化レベルと関数のマッピング
     enhancement_funcs = {
@@ -344,8 +391,58 @@ def index():
 
     return render_template('index.html', tap=tap, sell=sell, name=name, level=level,
                             family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
-                            selected_item=selected_item, selected_level=selected_level, 
-                            updates=updates)
+                            selected_item=selected_item, selected_level=selected_level)
+
+@app.route('/acc-enhancing-v2', methods=['GET', 'POST'])
+def acc_calc_v2():
+    profit = None
+    name = None
+    level = None
+    item = None
+    family_fame = False
+    pp = False
+    marchant_ring = False
+    selected_item = None
+    selected_level = None
+    if request.method == 'POST':
+        item = request.form['item']
+        level = request.form['level']
+        selected_item = item
+        selected_level = level
+        family_fame = "family_fame" in request.form
+        pp = "pp" in request.form
+        marchant_ring = "marchant_ring" in request.form
+        tax = 0.6533
+        if family_fame:
+            tax += 0.065
+        if pp:
+            tax += 0.1949
+        if marchant_ring:
+            tax += 0.0325
+
+        enhancement_funcs = {
+            'pri': acc_pri_v2,
+            'duo': acc_duo_v2,
+            'tri': acc_tri_v2,
+            'tet': acc_tet_v2,
+            'pen': acc_pen_v2
+        }
+
+        # 選択されたアクセサリーと強化関数を取得
+        selected_accessory = accessories.get(item)
+        selected_func = enhancement_funcs.get(level)
+
+        # 強化期待値を計算
+        if selected_accessory and selected_func:
+            profit = selected_func(selected_accessory, tax)
+
+        name = ja_name(item)
+        level = ja_level_name(level)
+
+    return render_template('acc-enhancing-v2.html', profit=profit, tax=tax, name=name, level=level,
+                            family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
+                            selected_item=selected_item, selected_level=selected_level)
+
 
 @app.route('/updates', methods=['GET', 'POST'])
 def updates():

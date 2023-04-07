@@ -1,0 +1,22 @@
+v2 calc
+0.7 - 0.5 - 0.41 - 0.3 - 0.115
+
+base to pri
+0.7 // acc[1]*tax - stack_cost 
+0.3 // - acc[0]*2
+
+pri to duo
+0.5 // acc[2]*tax - stack_cost
+0.5 // - ( acc[1] + acc[0] )
+
+duo to tri
+0.41 // acc[3]*tax - stack_cost
+0.59 // - ( acc[2] + acc[0] )
+
+tri to tet
+0.3 //
+0.7 //
+
+tet to pen
+0.115 // 
+0.885 //
