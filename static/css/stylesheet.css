@@ -13,7 +13,6 @@
             background-color: #4caf50;
             padding: 15px;
             color: #fff;
-            padding-bottom: 45px;
             position: relative;
          }
 
@@ -114,8 +113,17 @@
             text-align: center;
             padding: 20px;
             margin-top: 70px;
-            margin-bottom: 30px;
+            margin-bottom: 0px;
             color: #4caf50;
+         }
+
+         h3 {
+            font-size: 13px;
+            text-align: center;
+            padding: 20px;
+            margin-top: 0px;
+            margin-bottom: 30px;
+            color: #2c2c2c;
          }
 
          .container {

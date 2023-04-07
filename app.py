@@ -268,7 +268,7 @@ def acc_pri_v2(acc, tax):
     pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0]*2)*fail_chance))
     str_pri_expected_value = '{:,}'.format(pri_expected_value)
 
-    return str_pri_expected_value
+    return pri_expected_value , str_pri_expected_value
 
 def acc_duo_v2(acc, tax):
     success_chance = 0.5
@@ -278,7 +278,7 @@ def acc_duo_v2(acc, tax):
     duo_expected_value = round( ((acc[2]*tax - try2_stack_cost)*success_chance) - ((acc[1] + acc[0])*fail_chance) )
     str_duo_expected_value = '{:,}'.format(duo_expected_value)
 
-    return str_duo_expected_value
+    return duo_expected_value, str_duo_expected_value
 
 def acc_tri_v2(acc, tax):
     success_chance = 0.41
@@ -288,7 +288,7 @@ def acc_tri_v2(acc, tax):
     tri_expected_value = round( ((acc[3]*tax - try3_stack_cost)*success_chance) - ((acc[2] + acc[0])*fail_chance) )
     str_tri_expected_value = '{:,}'.format(tri_expected_value)
 
-    return str_tri_expected_value
+    return tri_expected_value, str_tri_expected_value
 
 def acc_tet_v2(acc, tax):
     success_chance = 0.3
@@ -298,7 +298,7 @@ def acc_tet_v2(acc, tax):
     tet_expected_value = round( ((acc[4]*tax - try4_stack_cost)*success_chance) - ((acc[3] + acc[0])*fail_chance) )
     str_tet_expected_value = '{:,}'.format(tet_expected_value)
 
-    return str_tet_expected_value
+    return tet_expected_value, str_tet_expected_value
 
 def acc_pen_v2(acc, tax):
     success_chance = 0.115
@@ -308,7 +308,7 @@ def acc_pen_v2(acc, tax):
     pen_expected_value = round( ((acc[5]*tax - try5_stack_cost)*success_chance) - ((acc[4] + acc[0])*fail_chance) )
     str_pen_expected_value = '{:,}'.format(pen_expected_value)
 
-    return str_pen_expected_value
+    return pen_expected_value, str_pen_expected_value
 
 # アクセサリーと強化関数のマッピング
 accessories = {
@@ -343,8 +343,8 @@ def index_root():
 
 @app.route('/acc-enhancing-v1', methods=['GET', 'POST'])
 def index():
-    tap = None
-    sell = None
+    tap = 0
+    sell = 0
     name = None
     level = None
     item = None
@@ -395,7 +395,8 @@ def index():
 
 @app.route('/acc-enhancing-v2', methods=['GET', 'POST'])
 def acc_calc_v2():
-    profit = None
+    int_profit = 0
+    str_profit = None
     name = None
     level = None
     item = None
@@ -404,6 +405,7 @@ def acc_calc_v2():
     marchant_ring = False
     selected_item = None
     selected_level = None
+    tax = 0.6533
     if request.method == 'POST':
         item = request.form['item']
         level = request.form['level']
@@ -412,7 +414,6 @@ def acc_calc_v2():
         family_fame = "family_fame" in request.form
         pp = "pp" in request.form
         marchant_ring = "marchant_ring" in request.form
-        tax = 0.6533
         if family_fame:
             tax += 0.065
         if pp:
@@ -434,12 +435,15 @@ def acc_calc_v2():
 
         # 強化期待値を計算
         if selected_accessory and selected_func:
-            profit = selected_func(selected_accessory, tax)
+            int_profit, str_profit = selected_func(selected_accessory, tax)
 
         name = ja_name(item)
         level = ja_level_name(level)
+    else:
+        int_profit = None
+        str_profit = None
 
-    return render_template('acc-enhancing-v2.html', profit=profit, tax=tax, name=name, level=level,
+    return render_template('acc-enhancing-v2.html', int_profit=int_profit, str_profit=str_profit, tax=tax, name=name, level=level,
                             family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
                             selected_item=selected_item, selected_level=selected_level)
 
@@ -448,6 +452,10 @@ def acc_calc_v2():
 def updates():
 
     updates = [
+    {
+        'date': '2023-04-07',
+        'info': '期待値計算機のバージョン2を公開しました。'
+    },
     {
         'date': '2023-03-27',
         'info': '真5の期待値計算を追加しました。'
