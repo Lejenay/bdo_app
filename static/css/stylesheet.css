@@ -118,12 +118,13 @@
          }
 
          h3 {
-            font-size: 13px;
+            font-size: 15px;
             text-align: center;
             padding: 20px;
             margin-top: 0px;
             margin-bottom: 30px;
             color: #2c2c2c;
+            font-weight: normal !important;
          }
 
          .container {
