@@ -530,6 +530,10 @@ def how_to_calc():
 def override_url_for():
     return dict(url_for=dated_url_for)
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
+
 def dated_url_for(endpoint, **values):
     if endpoint == 'static':
         filename = values.get('filename', None)

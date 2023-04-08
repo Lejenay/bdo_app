@@ -9,14 +9,32 @@
       
       <!-- Select2 CSS -->
       <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet">
+      <!-- jQuery -->
+      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+      <!-- Select2 JavaScript -->
+      <script src="https://cdn.jsdelivr.net/npm/select2@4.3.0-rc.1/dist/js/select2.min.js"></script>
       
       <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
+
+      <!-- Google Fonts -->
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400;500;700&display=swap" rel="stylesheet">
+      <style>
+      .red-text {
+         color: rgb(237, 137, 54);
+       }
+
+       .yellow-text {
+         color: rgb(236, 201, 75);
+      }
+      </style>
    </head>
 
    <body>
       <div class="content">
          <header>
-            <a href="{{ url_for('index')}}" class="title">黒い砂漠 便利アプリ</a>
+            <a href="{{ url_for('index')}}" class="title"><img src="{{ url_for('static', filename='logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
             <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
                <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
                <span class="name" id="header-name">Powerd by れじぇない</span>
@@ -155,6 +173,37 @@
                templateResult: formatOption,
                templateSelection: formatOption,
                escapeMarkup: function(m) { return m; }
+            });
+         });
+
+            $(document).ready(function() {
+               function formatOption(option) {
+               if (!option.id) {
+                  return option.text;
+               }
+               const isManos = option.text.includes("マノス");
+               const optionElement = $('<span>', {
+                  class: isManos ? 'red-text' : 'yellow-text',
+                  text: option.text
+               });
+
+               // 画像要素の追加
+               const imgSrc = $(option.element).data('image');
+               const imgElement = $('<img>', {
+                  src: imgSrc,
+                  class: 'select2-img',
+                  style: 'margin-right: 5px;'
+               });
+
+               const container = $('<span>');
+               container.append(imgElement);
+               container.append(optionElement);
+               return container;
+            }
+
+            $('#item').select2({
+               templateResult: formatOption,
+               templateSelection: formatOption
             });
          });
       </script>
