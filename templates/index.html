@@ -1,5 +1,6 @@
 <!doctype html>
 <html>
+
    <head>
       <meta name="description" content="MMOPRG,黒い砂漠のアクセサリー強化において、強化したほうが儲けが出るのか、そのまま売ったほうが良いのかを考察できる計算機です。絶賛開発中。" />
       <link rel="apple-touch-icon" type="image/png" href="{{ url_for('static', filename='apple-touch-icon-180x180.png') }}">
@@ -11,99 +12,119 @@
       
       <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
    </head>
+
    <body>
-      <header>
-         <a href="{{ url_for('index')}}" class="title">黒い砂漠 便利アプリ</a>
-         <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
-            <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
-            <span class="name" id="header-name">Powerd by れじぇない</span>
-         </a>
-      </header>
-      <nav>
-         <ul>
-            <li><a href="{{ url_for('index')}}">アクセ期待値計算機v1</a></li>
-            <li><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
-            <li><a href="{{ url_for('how_to_calc')}}">計算方法</a></li>
-            <li><a href="{{ url_for('updates')}}">アップデート</a></li>
-         </ul>
-      </nav>
-      {% block contents%}
-      <main>
-         <h1>アクセ期待値計算機v1</h1>
-         <h3>未強化のアクセを選択した強化段階まで叩く場合と、未強化アクセを全て売却する場合の損益を各々計算します。</h3>
-         <div class="container">
-            <div class="form-container">
-               <form method="POST">
-                  <label for="item">アクセ:</label>
-                  <select name="item" id="item" class="select2">
-                     {% for option in [
-                     ('crescent', '三日月守護者のリング', 'crescent.webp'),
-                     ('ruin_ring', '廃墟の瞳リング', 'ruin_ring.webp'), 
-                     ('tun_ring', 'ツングラドのリング', 'tun_ring.webp'),
-                     ('ominous_ring', '不気味な背後のリング', 'ominous_ring.webp'),
-                     ('cadry', 'カドリー守護者のリング', 'cadry.webp'),
-                     ('ogre_ring', 'オーガのリング', 'ogre_ring.webp'),
-                     ('laytenn', 'ライテンの動力石', 'laytenn.webp'),
-                     ('tun_neck', 'ツングラドのネックレス', 'tun_neck.webp'),
-                     ('lunar', '目覚めた月のネックレス', 'lunar.webp'),
-                     ('river', '目覚めた川のネックレス', 'river.webp'),
-                     ('sicil', 'シチルのネックレス', 'sicil.webp'),
-                     ('basi_belt', 'バジリスクのベルト', 'basi_belt.webp'),
-                     ('valt_belt', 'バルタラの隠れた光ベルト', 'valt_belt.webp'),
-                     ('tun_belt', 'ツングラドのベルト', 'tun_belt.webp'),
-                     ('centa_belt', 'ケンタウロスのベルト', 'centa_belt.webp'),
-                     ('orkin_belt', 'オルキンラドのベルト', 'orkin_belt.webp'),
-                     ('turo_belt', 'トゥーロのベルト', 'turo_belt.webp'),
-                     ('disto', '黒い侵食のイヤリング', 'disto.webp'),
-                     ('vaha', 'バアの暁', 'vaha.webp'),
-                     ('narc', 'ナクの耳飾り', 'narc.webp'), 
-                     ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'),
-                     ('dawn', '黎明のイヤリング', 'dawn.webp'),
-                     ('ethereal', '夢幻のイヤリング', 'ethereal.webp')
-                     ] %}
-                     <option value="{{ option[0] }}" data-image="{{ url_for('static', filename=option[2]) }}"
-                     {% if selected_item == option[0] %}selected{% endif %}>{{ option[1] }}</option>
-                     {% endfor %}
-                  </select>
-                  
-                  <label for="level">強化段階:</label>
-                  <select name="level" id="level">
-                     {% for option in [('pri', '真1'), ('duo', '真2'), ('tri', '真3'), ('tet', '真4'), ('pen', '真5')] %}
-                     <option value="{{ option[0] }}"
-                     {% if selected_level == option[0] %}selected{% endif %}>{{ option[1] }}</option>
-                     {% endfor %}
-                  </select>
+      <div class="content">
+         <header>
+            <a href="{{ url_for('index')}}" class="title">黒い砂漠 便利アプリ</a>
+            <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
+               <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
+               <span class="name" id="header-name">Powerd by れじぇない</span>
+            </a>
+         </header>
+         <nav>
+            <ul>
+               <li><a href="{{ url_for('index')}}">アクセ期待値計算機v1</a></li>
+               <li><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
+               <li><a href="{{ url_for('how_to_calc')}}">計算方法</a></li>
+               <li><a href="{{ url_for('updates')}}">アップデート</a></li>
+            </ul>
+         </nav>
 
-                  <label for="family-fame">家門名声:</label>
-                  <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
-                  <label class="checkbox-label" for="family_fame">7000以上</label>
+         {% block contents%}
 
-                  <label for="pp">プレパケ:</label>
-                  <input type="checkbox" id="pp" name="pp" value="on" {% if pp %} checked{% endif %}>
-                  <label class="checkbox-label" for="pp"></label>
+         <main>
+            <h1>アクセ期待値計算機v1</h1>
+            <h3>未強化のアクセを選択した強化段階まで叩く場合と、未強化アクセを全て売却する場合の損益を各々計算します。<br>
+            <span style="color:red;">現在 <span style="font-weight: bold; font-size: 20px;">v2のみ</span> でマノスアクセの計算ができます。</span>
+            </h3>
+            <div class="container">
+               <div class="form-container">
+                  <form method="POST">
+                     <label for="item">アクセ:</label>
+                     <select name="item" id="item" class="select2">
+                        {% for option in [
+                        ('crescent', '三日月守護者のリング', 'crescent.webp'),
+                        ('ruin_ring', '廃墟の瞳リング', 'ruin_ring.webp'), 
+                        ('tun_ring', 'ツングラドのリング', 'tun_ring.webp'),
+                        ('ominous_ring', '不気味な背後のリング', 'ominous_ring.webp'),
+                        ('cadry', 'カドリー守護者のリング', 'cadry.webp'),
+                        ('ogre_ring', 'オーガのリング', 'ogre_ring.webp'),
+                        ('laytenn', 'ライテンの動力石', 'laytenn.webp'),
+                        ('tun_neck', 'ツングラドのネックレス', 'tun_neck.webp'),
+                        ('lunar', '目覚めた月のネックレス', 'lunar.webp'),
+                        ('river', '目覚めた川のネックレス', 'river.webp'),
+                        ('sicil', 'シチルのネックレス', 'sicil.webp'),
+                        ('basi_belt', 'バジリスクのベルト', 'basi_belt.webp'),
+                        ('valt_belt', 'バルタラの隠れた光ベルト', 'valt_belt.webp'),
+                        ('tun_belt', 'ツングラドのベルト', 'tun_belt.webp'),
+                        ('centa_belt', 'ケンタウロスのベルト', 'centa_belt.webp'),
+                        ('orkin_belt', 'オルキンラドのベルト', 'orkin_belt.webp'),
+                        ('turo_belt', 'トゥーロのベルト', 'turo_belt.webp'),
+                        ('disto', '黒い侵食のイヤリング', 'disto.webp'),
+                        ('vaha', 'バアの暁', 'vaha.webp'),
+                        ('narc', 'ナクの耳飾り', 'narc.webp'), 
+                        ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'),
+                        ('dawn', '黎明のイヤリング', 'dawn.webp'),
+                        ('ethereal', '夢幻のイヤリング', 'ethereal.webp')
+                        ] %}
+                        <option value="{{ option[0] }}" data-image="{{ url_for('static', filename=option[2]) }}"
+                        {% if selected_item == option[0] %}selected{% endif %}>{{ option[1] }}</option>
+                        {% endfor %}
+                     </select>
+                     
+                     <label for="level">強化段階:</label>
+                     <select name="level" id="level">
+                        {% for option in [('pri', '真1'), ('duo', '真2'), ('tri', '真3'), ('tet', '真4'), ('pen', '真5')] %}
+                        <option value="{{ option[0] }}"
+                        {% if selected_level == option[0] %}selected{% endif %}>{{ option[1] }}</option>
+                        {% endfor %}
+                     </select>
 
-                  <label for="marchant_ring">巨匠のリング:</label>
-                  <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
-                  <label class="checkbox-label" for="marchant_ring"></label>
+                     <label for="family-fame">家門名声:</label>
+                     <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
+                     <label class="checkbox-label" for="family_fame">7000以上</label>
 
-                  <br>
-                  <br>
-                  <input type="submit" value="表示">
-               </form>
+                     <label for="pp">プレパケ:</label>
+                     <input type="checkbox" id="pp" name="pp" value="on" {% if pp %} checked{% endif %}>
+                     <label class="checkbox-label" for="pp"></label>
+
+                     <label for="marchant_ring">巨匠のリング:</label>
+                     <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
+                     <label class="checkbox-label" for="marchant_ring"></label>
+
+                     <br>
+                     <br>
+                     <input type="submit" value="表示">
+                  </form>
+               </div>
+               <div class="results-container">
+               {% if tap > sell %}
+                  {% if str_tap %}
+                     <p>{{ name }}{{ level }}の強化期待値は <span style="color: rgb(0, 189, 0);">{{ str_tap }}</span> シルバーです。</p>
+                  {% endif %}
+
+                  {% if str_sell %}
+                     <p>{{ name }}をそのまま売ると、売り上げは <span style="color: rgb(255, 0, 0);">{{ str_sell }} </span>シルバーです。</p>
+                  {% endif %}
+
+               {% else %}
+                  {% if str_tap %}
+                     <p>{{ name }}{{ level }}の強化期待値は <span style="color: rgb(255, 0, 0);">{{ str_tap }}</span> シルバーです。</p>
+                  {% endif %}
+
+                  {% if str_sell %}
+                  <p>{{ name }}をそのまま売ると、売り上げは <span style="color: rgb(0, 189, 0);">{{ str_sell }} </span>シルバーです。</p>
+                  {% endif %}
+               {% endif %}
+               </div>
             </div>
-            <div class="results-container">
-            {% if tap %}
-               <p>{{ name }}{{ level }}の強化期待値は{{ tap }}シルバーです。</p>
-            {% endif %}
+         </main>
 
-            {% if sell %}
-               <p>{{ name }}をそのまま売ると、売り上げは{{ sell }}シルバーです。</p>
-            {% endif %}
-            </div>
-         </div>
-      </main>
-      {% endblock %}         
-      
+         {% endblock %}
+
+      </div>
+
       <footer>
          <div class="footer-container">
             <p class="footer-text">© 2023 れじぇない. All rights reserved.</p>
@@ -137,5 +158,6 @@
             });
          });
       </script>
+
    </body>
 </html>

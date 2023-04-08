@@ -48,6 +48,7 @@ def item_api_call(item_id):
 # DB // SQLを導入したいですまる
 bs_armour = item_api_call(16002)
 bs_wepon = item_api_call(16001)
+concentrated_magical_black_gem = item_api_call(4987)
 crescent = acc_api_call(12031)
 tun_ring = acc_api_call(12061)
 ruin_ring = acc_api_call(12060)
@@ -71,7 +72,41 @@ ethereal = acc_api_call(11856)
 lunar = acc_api_call(11663)
 river = acc_api_call(11662)
 orkin_belt = acc_api_call(12251)
+manos_ring = acc_api_call(705511)
+manos_earring = acc_api_call(705510)
+manos_necklace = acc_api_call(705509)
+manos_belt = acc_api_call(705512)
 
+# アクセサリーと強化関数のマッピング
+accessories = {
+    'crescent': crescent,
+    'tun_ring': tun_ring,
+    'tun_belt': tun_belt,
+    'disto': disto,
+    'narc': narc,
+    'ruin_ring': ruin_ring,
+    'tun_ear': tun_ear,
+    'tun_neck': tun_neck,
+    'turo_belt': turo_belt,
+    'basi_belt': basi_belt,
+    'centa_belt': centa_belt,
+    'ominous_ring': ominous_ring,
+    'ogre_ring': ogre_ring,
+    'laytenn': laytenn,
+    'sicil': sicil,
+    'dawn': dawn,
+    'vaha': vaha,
+    'cadry': cadry,
+    'valt_belt': valt_belt,
+    'lunar': lunar,
+    'river': river,
+    'ethereal': ethereal,
+    'orkin_belt': orkin_belt,
+    'manos_ring': manos_ring,
+    'manos_earring': manos_earring,
+    'manos_necklace': manos_necklace,
+    'manos_belt': manos_belt
+}
 
 def ja_name(item):
     accessories = {
@@ -97,7 +132,11 @@ def ja_name(item):
         'lunar': '月ネックレス',
         'river': '川ネックレス',
         'ethereal': '夢幻イヤリング',
-        'orkin_belt': 'オルキンベルト' 
+        'orkin_belt': 'オルキンベルト',
+        'manos_ring': 'マノスリング',
+        'manos_earring': 'マノスイヤリング',
+        'manos_necklace': 'マノスネックレス',
+        'manos_belt': 'マノスベルト'
     }
 
     if item in accessories.keys():
@@ -125,7 +164,7 @@ def acc_pri(acc, tax):
     base_sell = round((acc[0]*2) *tax)
     str_base_sell = '{:,}'.format(base_sell)
 
-    return str_pri_expected_value, str_base_sell
+    return pri_expected_value, base_sell, str_pri_expected_value, str_base_sell
 
     '''
     真1を叩いた時の期待売上/str_pri_expected_value
@@ -145,7 +184,7 @@ def acc_duo(acc, tax):
     base_sell = round((acc[0]*3) *tax)
     str_base_sell = '{:,}'.format(base_sell)
 
-    return str_duo_expected_value, str_base_sell
+    return duo_expected_value, base_sell, str_duo_expected_value, str_base_sell
 
 def acc_tri(acc, tax):
     try3_stack_cost = (200 + 150 + 31) * bs_armour
@@ -161,7 +200,7 @@ def acc_tri(acc, tax):
     base_sell = round((acc[0]*4) *tax)
     str_base_sell = '{:,}'.format(base_sell)
 
-    return str_tri_expected_value, str_base_sell
+    return tri_expected_value, base_sell, str_tri_expected_value, str_base_sell
 
 def acc_tet(acc, tax):
     try4_stack_cost = (2000 + 200 + 150 + 31)* bs_armour
@@ -200,7 +239,7 @@ def acc_tet(acc, tax):
     base_sell = round((acc[0]*5) *tax)
     str_base_sell = '{:,}'.format(base_sell)
 
-    return str_tet_expected_value, str_base_sell
+    return tet_expected_value, base_sell, str_tet_expected_value, str_base_sell
 
 def acc_pen(acc, tax):
     try5_stack_cost = (20000)
@@ -258,22 +297,35 @@ def acc_pen(acc, tax):
     base_sell = round((acc[0]*6) *tax)
     str_base_sell = '{:,}'.format(base_sell)
 
-    return str_pen_expected_value, str_base_sell
+    return pen_expected_value, base_sell, str_pen_expected_value, str_base_sell
+
+inverce_accessories = {tuple(v):k for k, v in accessories.items()}
 
 def acc_pri_v2(acc, tax):
-    success_chance = 0.7
-    fail_chance = 0.3
-    try1_stack_cost = 31 * bs_armour
+    if "manos" in inverce_accessories[tuple(acc)]:
+        success_chance = 0.75
+        fail_chance = 0.25
+        try1_stack_cost = 10 * concentrated_magical_black_gem
+        pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0] + try1_stack_cost)*fail_chance))
+    else:
+        success_chance = 0.7
+        fail_chance = 0.3
+        try1_stack_cost = 31 * bs_armour
+        pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0]*2)*fail_chance))
 
-    pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0]*2)*fail_chance))
     str_pri_expected_value = '{:,}'.format(pri_expected_value)
 
     return pri_expected_value , str_pri_expected_value
 
 def acc_duo_v2(acc, tax):
-    success_chance = 0.5
-    fail_chance = 0.5
-    try2_stack_cost = 150 * bs_armour
+    if "manos" in inverce_accessories[tuple(acc)]:
+        success_chance = 0.45
+        fail_chance = 0.55
+        try2_stack_cost = 11 * concentrated_magical_black_gem
+    else:
+        success_chance = 0.5
+        fail_chance = 0.5
+        try2_stack_cost = 150 * bs_armour
 
     duo_expected_value = round( ((acc[2]*tax - try2_stack_cost)*success_chance) - ((acc[1] + acc[0])*fail_chance) )
     str_duo_expected_value = '{:,}'.format(duo_expected_value)
@@ -281,9 +333,14 @@ def acc_duo_v2(acc, tax):
     return duo_expected_value, str_duo_expected_value
 
 def acc_tri_v2(acc, tax):
-    success_chance = 0.41
-    fail_chance = 0.59
-    try3_stack_cost = 200 * bs_armour
+    if "manos" in inverce_accessories[tuple(acc)]:
+        success_chance = 0.3
+        fail_chance = 0.7
+        try3_stack_cost = 13 * concentrated_magical_black_gem
+    else:
+        success_chance = 0.41
+        fail_chance = 0.59
+        try3_stack_cost = 200 * bs_armour
 
     tri_expected_value = round( ((acc[3]*tax - try3_stack_cost)*success_chance) - ((acc[2] + acc[0])*fail_chance) )
     str_tri_expected_value = '{:,}'.format(tri_expected_value)
@@ -291,9 +348,14 @@ def acc_tri_v2(acc, tax):
     return tri_expected_value, str_tri_expected_value
 
 def acc_tet_v2(acc, tax):
-    success_chance = 0.3
-    fail_chance = 0.7
-    try4_stack_cost = 2000 * bs_armour
+    if "manos" in inverce_accessories[tuple(acc)]:
+        success_chance = 0.15
+        fail_chance = 0.85
+        try4_stack_cost = 16 * concentrated_magical_black_gem
+    else:
+        success_chance = 0.3
+        fail_chance = 0.7
+        try4_stack_cost = 2000 * bs_armour
 
     tet_expected_value = round( ((acc[4]*tax - try4_stack_cost)*success_chance) - ((acc[3] + acc[0])*fail_chance) )
     str_tet_expected_value = '{:,}'.format(tet_expected_value)
@@ -301,41 +363,19 @@ def acc_tet_v2(acc, tax):
     return tet_expected_value, str_tet_expected_value
 
 def acc_pen_v2(acc, tax):
-    success_chance = 0.115
-    fail_chance = 0.885
-    try5_stack_cost = 20000 * bs_armour
+    if "manos" in inverce_accessories[tuple(acc)]:
+        success_chance = 0.05
+        fail_chance = 0.95
+        try5_stack_cost = 20 * concentrated_magical_black_gem
+    else:
+        success_chance = 0.115
+        fail_chance = 0.885
+        try5_stack_cost = 20000 * bs_armour
 
     pen_expected_value = round( ((acc[5]*tax - try5_stack_cost)*success_chance) - ((acc[4] + acc[0])*fail_chance) )
     str_pen_expected_value = '{:,}'.format(pen_expected_value)
 
     return pen_expected_value, str_pen_expected_value
-
-# アクセサリーと強化関数のマッピング
-accessories = {
-    'crescent': crescent,
-    'tun_ring': tun_ring,
-    'tun_belt': tun_belt,
-    'disto': disto,
-    'narc': narc,
-    'ruin_ring': ruin_ring,
-    'tun_ear': tun_ear,
-    'tun_neck': tun_neck,
-    'turo_belt': turo_belt,
-    'basi_belt': basi_belt,
-    'centa_belt': centa_belt,
-    'ominous_ring': ominous_ring,
-    'ogre_ring': ogre_ring,
-    'laytenn': laytenn,
-    'sicil': sicil,
-    'dawn': dawn,
-    'vaha': vaha,
-    'cadry': cadry,
-    'valt_belt': valt_belt,
-    'lunar': lunar,
-    'river': river,
-    'ethereal': ethereal,
-    'orkin_belt': orkin_belt
-}
 
 @app.route('/', methods=['GET', 'POST'])
 def index_root():
@@ -345,6 +385,8 @@ def index_root():
 def index():
     tap = 0
     sell = 0
+    str_tap = None
+    str_sell = None
     name = None
     level = None
     item = None
@@ -384,12 +426,12 @@ def index():
 
     # 強化期待値と売り上げを計算
     if selected_accessory and selected_func:
-        tap, sell = selected_func(selected_accessory, tax)
+        tap, sell, str_tap, str_sell = selected_func(selected_accessory, tax)
 
     name = ja_name(item)
     level = ja_level_name(level)
 
-    return render_template('index.html', tap=tap, sell=sell, name=name, level=level,
+    return render_template('index.html', tap=tap, sell=sell, str_tap=str_tap, str_sell=str_sell, name=name, level=level,
                             family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
                             selected_item=selected_item, selected_level=selected_level)
 
@@ -452,6 +494,10 @@ def acc_calc_v2():
 def updates():
 
     updates = [
+    {
+        'date': '2023-04-08',
+        'info': '計算機v2にマノスアクセを追加しました。'
+    },
     {
         'date': '2023-04-07',
         'info': '期待値計算機のバージョン2を公開しました。'

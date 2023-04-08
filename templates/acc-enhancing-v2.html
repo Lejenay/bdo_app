@@ -8,7 +8,9 @@
 <main>
     <h1>アクセ期待値計算機v2</h1>
     <h3>選択した強化段階を叩く場合の損益を計算します。<br>
-        利益を得るために、次の強化段階へ進むべきかを調べます。</h3>
+        利益を得るために、次の強化段階へ進むべきかを調べます。<br>
+        <span style="color:rgb(0, 189, 0);">現在 <span style="font-weight: bold; font-size: 20px;">v2のみ</span> でマノスアクセの計算ができます。</span>
+    </h3>
         <div class="container">
             <div class="form-container">
                 <form method="POST">
@@ -37,7 +39,11 @@
                     ('narc', 'ナクの耳飾り', 'narc.webp'), 
                     ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'),
                     ('dawn', '黎明のイヤリング', 'dawn.webp'),
-                    ('ethereal', '夢幻のイヤリング', 'ethereal.webp')
+                    ('ethereal', '夢幻のイヤリング', 'ethereal.webp'),
+                    ('manos_ring', 'マノスリング', 'manos_ring.webp'),
+                    ('manos_earring', 'マノスイヤリング', 'manos_earring.webp'),
+                    ('manos_necklace', 'マノスネックレス', 'manos_necklace.webp'),
+                    ('manos_belt', 'マノスベルト', 'manos_belt.webp')
                     ] %}
                         <option value="{{ option[0] }}" data-image="{{ url_for('static', filename=option[2]) }}"
                         {% if selected_item == option[0] %}selected{% endif %}>{{ option[1] }}</option>
