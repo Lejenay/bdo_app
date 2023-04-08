@@ -69,7 +69,14 @@
             margin: 0 auto;
 
          }
+
          .github-icon {
+            width: 32px;
+            height: 32px;
+            margin-left: 10px;
+         }
+
+         .twitter-icon {
             width: 32px;
             height: 32px;
             margin-left: 10px;
@@ -149,7 +156,7 @@
             text-align: center;
             padding: 20px;
             margin-top: 0px;
-            margin-bottom: 30px;
+            margin-bottom: 0px;
             color: #2c2c2c;
             font-weight: normal !important;
          }
@@ -344,4 +351,26 @@
             width: 32px;
             height: 32px;
             margin-bottom: -10px;
+         }
+
+         .portal {
+            max-width: 800px;
+            margin: 70px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+         }
+
+         .portal h2 {
+            font-size: 20px;
+            padding: 10px;
+            margin-bottom: 15px;
+            color: #4caf50;
+            text-decoration: underline;
+         }
+
+         .warn {
+            color: red;
+            font-weight: normal;
          }

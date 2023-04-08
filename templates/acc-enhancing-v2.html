@@ -9,7 +9,7 @@
     <h1>アクセ期待値計算機v2</h1>
     <h3>選択した強化段階を叩く場合の損益を計算します。<br>
         利益を得るために、次の強化段階へ進むべきかを調べます。<br>
-        <span style="color:rgb(0, 189, 0);">現在 <span style="font-weight: bold; font-size: 20px;">v2のみ</span> でマノスアクセの計算ができます。</span>
+        <span style="color:rgb(0, 189, 0);">現在 <span style="font-weight: bold; font-size: 20px;">v2のみ</span> でマノスアクセ・アクセ錬金（金策）の計算ができます。</span>
     </h3>
         <div class="container">
             <div class="form-container">
@@ -70,6 +70,10 @@
                     <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
                     <label class="checkbox-label" for="marchant_ring"></label>
 
+                    <label for="marchant_ring">アクセ錬金:</label>
+                    <input type="checkbox" id="acc_alc" name="acc_alc" value="on" {% if acc_alc %} checked{% endif %}>
+                    <label class="checkbox-label" for="acc_alc"></label>
+                    <span class="warn">※未強化アクセを取引所で購入する場合にチェック</span>
                     <br>
                     <br>
                     <input type="submit" value="表示">

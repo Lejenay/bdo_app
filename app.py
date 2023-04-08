@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for
 import re
 import requests
 import os
@@ -300,86 +300,122 @@ def acc_pen(acc, tax):
     return pen_expected_value, base_sell, str_pen_expected_value, str_base_sell
 
 inverce_accessories = {tuple(v):k for k, v in accessories.items()}
+acc_alc = False
 
 def acc_pri_v2(acc, tax):
+    acc_alc = "acc_alc" in request.form
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.75
         fail_chance = 0.25
         try1_stack_cost = 10 * concentrated_magical_black_gem
-        pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0] + try1_stack_cost)*fail_chance))
+        if acc_alc:
+            pri_expected_value = round( ((acc[1]*tax - try1_stack_cost - acc[0])*success_chance) - ((acc[0] + try1_stack_cost)*fail_chance))
+        else:
+            pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0] + try1_stack_cost)*fail_chance))
     else:
         success_chance = 0.7
         fail_chance = 0.3
         try1_stack_cost = 31 * bs_armour
-        pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0]*2)*fail_chance))
+        if acc_alc:
+            pri_expected_value = round( ((acc[1]*tax - try1_stack_cost - acc[0]*2)*success_chance) - ((acc[0]*2)*fail_chance))
+        else:
+            pri_expected_value = round( ((acc[1]*tax - try1_stack_cost)*success_chance) - ((acc[0]*2)*fail_chance))
 
     str_pri_expected_value = '{:,}'.format(pri_expected_value)
 
-    return pri_expected_value , str_pri_expected_value
+    return pri_expected_value , str_pri_expected_value, acc_alc
 
 def acc_duo_v2(acc, tax):
+    acc_alc = "acc_alc" in request.form
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.45
         fail_chance = 0.55
         try2_stack_cost = 11 * concentrated_magical_black_gem
+        if acc_alc:
+            duo_expected_value = round( ((acc[2]*tax - try2_stack_cost - acc[1])*success_chance) - ((acc[1] + try2_stack_cost)*fail_chance))
+        else:
+            duo_expected_value = round( ((acc[2]*tax - try2_stack_cost)*success_chance) - ((acc[1] + try2_stack_cost)*fail_chance))
     else:
         success_chance = 0.5
         fail_chance = 0.5
         try2_stack_cost = 150 * bs_armour
+        if acc_alc:
+            duo_expected_value = round( ((acc[2]*tax - try2_stack_cost - acc[1] - acc[0])*success_chance) - ((acc[1] + acc[0])*fail_chance))
+        else:
+            duo_expected_value = round( ((acc[2]*tax - try2_stack_cost)*success_chance) - ((acc[1] + acc[0])*fail_chance) )
 
-    duo_expected_value = round( ((acc[2]*tax - try2_stack_cost)*success_chance) - ((acc[1] + acc[0])*fail_chance) )
     str_duo_expected_value = '{:,}'.format(duo_expected_value)
 
-    return duo_expected_value, str_duo_expected_value
+    return duo_expected_value, str_duo_expected_value, acc_alc
 
 def acc_tri_v2(acc, tax):
+    acc_alc = "acc_alc" in request.form
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.3
         fail_chance = 0.7
         try3_stack_cost = 13 * concentrated_magical_black_gem
+        if acc_alc:
+            tri_expected_value = round( ((acc[3]*tax - try3_stack_cost - acc[2])*success_chance) - ((acc[2] + try3_stack_cost)*fail_chance))
+        else:
+            tri_expected_value = round( ((acc[3]*tax - try3_stack_cost)*success_chance) - ((acc[2] + try3_stack_cost)*fail_chance))
     else:
         success_chance = 0.41
         fail_chance = 0.59
         try3_stack_cost = 200 * bs_armour
+        if acc_alc:
+            tri_expected_value = round( ((acc[3]*tax - try3_stack_cost - acc[2] - acc[0])*success_chance) - ((acc[2] + acc[0])*fail_chance))
+        else:
+            tri_expected_value = round( ((acc[3]*tax - try3_stack_cost)*success_chance) - ((acc[2] + acc[0])*fail_chance) )
 
-    tri_expected_value = round( ((acc[3]*tax - try3_stack_cost)*success_chance) - ((acc[2] + acc[0])*fail_chance) )
     str_tri_expected_value = '{:,}'.format(tri_expected_value)
 
-    return tri_expected_value, str_tri_expected_value
+    return tri_expected_value, str_tri_expected_value, acc_alc
 
 def acc_tet_v2(acc, tax):
+    acc_alc = "acc_alc" in request.form
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.15
         fail_chance = 0.85
         try4_stack_cost = 16 * concentrated_magical_black_gem
+        if acc_alc:
+            tet_expected_value = round( ((acc[4]*tax - try4_stack_cost - acc[3])*success_chance) - ((acc[3] + try4_stack_cost)*fail_chance))
+        else:
+            tet_expected_value = round( ((acc[4]*tax - try4_stack_cost)*success_chance) - ((acc[3] + try4_stack_cost)*fail_chance))
     else:
         success_chance = 0.3
         fail_chance = 0.7
         try4_stack_cost = 2000 * bs_armour
+        if acc_alc:
+            tet_expected_value = round( ((acc[4]*tax - try4_stack_cost - acc[3] - acc[0])*success_chance) - ((acc[3] + acc[0])*fail_chance))
+        else:
+            tet_expected_value = round( ((acc[4]*tax - try4_stack_cost)*success_chance) - ((acc[3] + acc[0])*fail_chance) )
 
-    tet_expected_value = round( ((acc[4]*tax - try4_stack_cost)*success_chance) - ((acc[3] + acc[0])*fail_chance) )
     str_tet_expected_value = '{:,}'.format(tet_expected_value)
 
-    return tet_expected_value, str_tet_expected_value
+    return tet_expected_value, str_tet_expected_value, acc_alc
 
 def acc_pen_v2(acc, tax):
+    acc_alc = "acc_alc" in request.form
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.05
         fail_chance = 0.95
         try5_stack_cost = 20 * concentrated_magical_black_gem
+        if acc_alc:
+            pen_expected_value = round( ((acc[5]*tax - try5_stack_cost - acc[4])*success_chance) - ((acc[4] + try5_stack_cost)*fail_chance))
+        else:
+            pen_expected_value = round( ((acc[5]*tax - try5_stack_cost)*success_chance) - ((acc[4] + try5_stack_cost)*fail_chance))
     else:
         success_chance = 0.115
         fail_chance = 0.885
         try5_stack_cost = 20000 * bs_armour
+        if acc_alc:
+            pen_expected_value = round( ((acc[5]*tax - try5_stack_cost - acc[4] - acc[0])*success_chance) - ((acc[4] + acc[0])*fail_chance))
+        else:
+            pen_expected_value = round( ((acc[5]*tax - try5_stack_cost)*success_chance) - ((acc[4] + acc[0])*fail_chance) )
 
-    pen_expected_value = round( ((acc[5]*tax - try5_stack_cost)*success_chance) - ((acc[4] + acc[0])*fail_chance) )
     str_pen_expected_value = '{:,}'.format(pen_expected_value)
 
-    return pen_expected_value, str_pen_expected_value
-
-@app.route('/', methods=['GET', 'POST'])
-def index_root():
-    return redirect(url_for('index'))
+    return pen_expected_value, str_pen_expected_value, acc_alc
 
 @app.route('/acc-enhancing-v1', methods=['GET', 'POST'])
 def index():
@@ -447,6 +483,7 @@ def acc_calc_v2():
     marchant_ring = False
     selected_item = None
     selected_level = None
+    acc_alc = False
     tax = 0.6533
     if request.method == 'POST':
         item = request.form['item']
@@ -477,16 +514,18 @@ def acc_calc_v2():
 
         # 強化期待値を計算
         if selected_accessory and selected_func:
-            int_profit, str_profit = selected_func(selected_accessory, tax)
+            int_profit, str_profit, acc_alc = selected_func(selected_accessory, tax)
 
         name = ja_name(item)
         level = ja_level_name(level)
+
+    
     else:
         int_profit = None
         str_profit = None
 
     return render_template('acc-enhancing-v2.html', int_profit=int_profit, str_profit=str_profit, tax=tax, name=name, level=level,
-                            family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
+                            family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, acc_alc=acc_alc,
                             selected_item=selected_item, selected_level=selected_level)
 
 
@@ -496,7 +535,7 @@ def updates():
     updates = [
     {
         'date': '2023-04-08',
-        'info': '計算機v2にマノスアクセを追加しました。'
+        'info': '計算機v2にマノスアクセ・アクセ錬金（金策）計算を追加しました。'
     },
     {
         'date': '2023-04-07',
@@ -526,13 +565,17 @@ def updates():
 def how_to_calc():
     return render_template('how-to-calc.html')
 
-@app.context_processor
-def override_url_for():
-    return dict(url_for=dated_url_for)
+@app.route('/', methods=['GET', 'POST'])
+def index_root():
+    return render_template('home.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
+
+@app.context_processor
+def override_url_for():
+    return dict(url_for=dated_url_for)
 
 def dated_url_for(endpoint, **values):
     if endpoint == 'static':

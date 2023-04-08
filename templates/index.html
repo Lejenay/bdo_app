@@ -26,7 +26,7 @@
        }
 
        .yellow-text {
-         color: rgb(236, 201, 75);
+         color: rgb(133, 128, 0);
       }
       </style>
    </head>
@@ -36,12 +36,13 @@
          <header>
             <a href="{{ url_for('index')}}" class="title"><img src="{{ url_for('static', filename='logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
             <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
-               <img src="{{ url_for('static', filename='icon-192x192.png') }}" alt="アイコン">
+               <img src="{{ url_for('static', filename='icon.png') }}" alt="アイコン">
                <span class="name" id="header-name">Powerd by れじぇない</span>
             </a>
          </header>
          <nav>
             <ul>
+               <li><a href="{{ url_for('index_root')}}">ポータル</a></li>
                <li><a href="{{ url_for('index')}}">アクセ期待値計算機v1</a></li>
                <li><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
                <li><a href="{{ url_for('how_to_calc')}}">計算方法</a></li>
@@ -54,7 +55,7 @@
          <main>
             <h1>アクセ期待値計算機v1</h1>
             <h3>未強化のアクセを選択した強化段階まで叩く場合と、未強化アクセを全て売却する場合の損益を各々計算します。<br>
-            <span style="color:red;">現在 <span style="font-weight: bold; font-size: 20px;">v2のみ</span> でマノスアクセの計算ができます。</span>
+            <span style="color:rgb(235, 0, 0);">現在 <span style="font-weight: bold; font-size: 20px;">v2のみ</span> でマノスアクセ・アクセ錬金（金策）の計算ができます。</span>
             </h3>
             <div class="container">
                <div class="form-container">
@@ -110,7 +111,6 @@
                      <label for="marchant_ring">巨匠のリング:</label>
                      <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
                      <label class="checkbox-label" for="marchant_ring"></label>
-
                      <br>
                      <br>
                      <input type="submit" value="表示">
@@ -148,6 +148,7 @@
             <p class="footer-text">© 2023 れじぇない. All rights reserved.</p>
             <a href="https://github.com/Lejenay/bdo_app" target="_blank">
                <img src="{{ url_for('static', filename='github-mark-white.png') }}" alt="GitHub" class="github-icon">
+               <img src="{{ url_for('static', filename='Twitter.png') }}" alt="Twitter" class="twitter-icon">
             </a>
          </div>
       </footer>
