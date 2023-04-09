@@ -29,12 +29,22 @@
          color: rgb(133, 128, 0);
       }
       </style>
+
+      <!-- Google tag (gtag.js) Google Analytics-->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-48245QC43P"></script>
+      <script>
+         window.dataLayer = window.dataLayer || [];
+         function gtag(){dataLayer.push(arguments);}
+         gtag('js', new Date());
+
+         gtag('config', 'G-48245QC43P');
+      </script>
    </head>
 
    <body>
       <div class="content">
          <header>
-            <a href="{{ url_for('index')}}" class="title"><img src="{{ url_for('static', filename='logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
+            <a href="{{ url_for('index_root')}}" class="title"><img src="{{ url_for('static', filename='logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
             <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
                <img src="{{ url_for('static', filename='icon.png') }}" alt="アイコン">
                <span class="name" id="header-name">Powerd by れじぇない</span>
