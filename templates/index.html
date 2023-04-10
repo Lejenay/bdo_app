@@ -53,8 +53,6 @@
                <li><a href="{{ url_for('index_root')}}">ポータル</a></li>
                <li><a href="{{ url_for('index')}}">アクセ期待値計算機v1</a></li>
                <li><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
-               <li><a href="{{ url_for('how_to_calc')}}">計算方法</a></li>
-               <li><a href="{{ url_for('updates')}}">アップデート</a></li>
             </ul>
          </nav>
 
@@ -153,6 +151,11 @@
 
       <footer>
          <div class="footer-container">
+            <div class="footer-links">
+               <a href="{{ url_for('how_to_calc')}}" class="footer-link">計算方法</a>
+               <a href="{{ url_for('updates')}}" class="footer-link">アップデート情報</a>
+               <a href="{{ url_for('privacy')}}" class="footer-link">プライバシー</a>
+            </div>
             <p class="footer-text">© 2023 れじぇない. All rights reserved.</p>
             <a href="https://github.com/Lejenay/bdo_app" target="_blank">
                <img src="{{ url_for('static', filename='github-mark-white.png') }}" alt="GitHub" class="github-icon">

@@ -569,6 +569,10 @@ def how_to_calc():
 def index_root():
     return render_template('home.html')
 
+@app.route('/privacy', methods=['GET', 'POST'])
+def privacy():
+    return render_template('privacy.html')
+
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404

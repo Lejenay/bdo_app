@@ -65,9 +65,23 @@
             justify-content: space-between;
             align-items: center;
             max-width: 1200px;
-            max-height: 50px;
+            max-height: 80px;
             margin: 0 auto;
 
+         }
+
+         .footer-links {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+         }
+         
+         .footer-link {
+            text-decoration: none;
+            color: #ffffff;
+            margin: 5px;
+            font-family: "Noto Sans Japanese", sans-serif;
+            font-weight: 100;
          }
 
          .github-icon {
@@ -381,4 +395,29 @@
 
          .yellow-text {
             color: rgb(133, 128, 0);
+         }
+         
+         .privacy {
+            max-width: 600px;
+            margin: 70px auto;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+         }
+
+         .privacy h2 {
+            font-size: 20px;
+            text-align: center;
+            padding: 10px;
+            margin-bottom: 15px;
+            color: #4caf50;
+         }
+
+         .privacy a {
+            text-decoration: underline;
+         }
+         
+         .privacy p {
+            box-shadow: none;
          }
