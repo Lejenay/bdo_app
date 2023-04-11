@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for
+from flask import Flask, render_template, request, url_for, jsonify
 import re
 import requests
 import os
@@ -107,6 +107,7 @@ accessories = {
     'manos_necklace': manos_necklace,
     'manos_belt': manos_belt
 }
+
 
 def ja_name(item):
     accessories = {
@@ -300,10 +301,8 @@ def acc_pen(acc, tax):
     return pen_expected_value, base_sell, str_pen_expected_value, str_base_sell
 
 inverce_accessories = {tuple(v):k for k, v in accessories.items()}
-acc_alc = False
 
-def acc_pri_v2(acc, tax):
-    acc_alc = "acc_alc" in request.form
+def acc_pri_v2(acc, tax, acc_alc):
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.75
         fail_chance = 0.25
@@ -323,10 +322,9 @@ def acc_pri_v2(acc, tax):
 
     str_pri_expected_value = '{:,}'.format(pri_expected_value)
 
-    return pri_expected_value , str_pri_expected_value, acc_alc
+    return pri_expected_value , str_pri_expected_value
 
-def acc_duo_v2(acc, tax):
-    acc_alc = "acc_alc" in request.form
+def acc_duo_v2(acc, tax, acc_alc):
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.45
         fail_chance = 0.55
@@ -346,10 +344,9 @@ def acc_duo_v2(acc, tax):
 
     str_duo_expected_value = '{:,}'.format(duo_expected_value)
 
-    return duo_expected_value, str_duo_expected_value, acc_alc
+    return duo_expected_value, str_duo_expected_value
 
-def acc_tri_v2(acc, tax):
-    acc_alc = "acc_alc" in request.form
+def acc_tri_v2(acc, tax, acc_alc):
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.3
         fail_chance = 0.7
@@ -369,10 +366,9 @@ def acc_tri_v2(acc, tax):
 
     str_tri_expected_value = '{:,}'.format(tri_expected_value)
 
-    return tri_expected_value, str_tri_expected_value, acc_alc
+    return tri_expected_value, str_tri_expected_value
 
-def acc_tet_v2(acc, tax):
-    acc_alc = "acc_alc" in request.form
+def acc_tet_v2(acc, tax, acc_alc):
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.15
         fail_chance = 0.85
@@ -392,10 +388,9 @@ def acc_tet_v2(acc, tax):
 
     str_tet_expected_value = '{:,}'.format(tet_expected_value)
 
-    return tet_expected_value, str_tet_expected_value, acc_alc
+    return tet_expected_value, str_tet_expected_value
 
-def acc_pen_v2(acc, tax):
-    acc_alc = "acc_alc" in request.form
+def acc_pen_v2(acc, tax, acc_alc):
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.05
         fail_chance = 0.95
@@ -415,7 +410,7 @@ def acc_pen_v2(acc, tax):
 
     str_pen_expected_value = '{:,}'.format(pen_expected_value)
 
-    return pen_expected_value, str_pen_expected_value, acc_alc
+    return pen_expected_value, str_pen_expected_value
 
 @app.route('/acc-enhancing-v1', methods=['GET', 'POST'])
 def index():
@@ -471,8 +466,12 @@ def index():
                             family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
                             selected_item=selected_item, selected_level=selected_level)
 
-@app.route('/acc-enhancing-v2', methods=['GET', 'POST'])
+@app.route('/acc-enhancing-v2')
 def acc_calc_v2():
+    return render_template('acc-enhancing-v2.html')
+
+@app.route('/acc-enhancing-v2-ajax', methods=['GET', 'POST'])
+def acc_calc_v2_ajax():
     int_profit = 0
     str_profit = None
     name = None
@@ -481,18 +480,18 @@ def acc_calc_v2():
     family_fame = False
     pp = False
     marchant_ring = False
-    selected_item = None
-    selected_level = None
     acc_alc = False
     tax = 0.6533
+
     if request.method == 'POST':
-        item = request.form['item']
-        level = request.form['level']
-        selected_item = item
-        selected_level = level
-        family_fame = "family_fame" in request.form
-        pp = "pp" in request.form
-        marchant_ring = "marchant_ring" in request.form
+        data = request.get_json()
+        acc_alc = data['acc_alc']
+        item = data['item']
+        level = data['level']
+        family_fame = data['family_fame']
+        pp = data['pp']
+        marchant_ring = data['marchant_ring']
+        
         if family_fame:
             tax += 0.065
         if pp:
@@ -514,25 +513,35 @@ def acc_calc_v2():
 
         # 強化期待値を計算
         if selected_accessory and selected_func:
-            int_profit, str_profit, acc_alc = selected_func(selected_accessory, tax)
+            int_profit, str_profit = selected_func(selected_accessory, tax, acc_alc)
 
         name = ja_name(item)
         level = ja_level_name(level)
-
     
     else:
         int_profit = None
         str_profit = None
 
-    return render_template('acc-enhancing-v2.html', int_profit=int_profit, str_profit=str_profit, tax=tax, name=name, level=level,
-                            family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, acc_alc=acc_alc,
-                            selected_item=selected_item, selected_level=selected_level)
+    response = {
+        'result':{
+            'int_profit': int_profit,
+            'str_profit': str_profit,
+            'name': name,
+            'level': level,
+        }
+    }
+
+    return(jsonify(response))
 
 
 @app.route('/updates', methods=['GET', 'POST'])
 def updates():
 
     updates = [
+    {
+        'date': '2023-04-11',
+        'info': '計算機v2にAjaxを導入しました。'
+    },
     {
         'date': '2023-04-08',
         'info': '計算機v2にマノスアクセ・アクセ錬金（金策）計算を追加しました。'
@@ -576,19 +585,6 @@ def privacy():
 @app.errorhandler(404)
 def page_not_found(e):
     return render_template('404.html'), 404
-
-@app.context_processor
-def override_url_for():
-    return dict(url_for=dated_url_for)
-
-def dated_url_for(endpoint, **values):
-    if endpoint == 'static':
-        filename = values.get('filename', None)
-        if filename:
-            file_path = os.path.join(app.root_path,
-                                     endpoint, filename)
-            values['q'] = int(os.stat(file_path).st_mtime)
-    return url_for(endpoint, **values)
 
 if __name__ == '__main__':
     app.run(debug=True)

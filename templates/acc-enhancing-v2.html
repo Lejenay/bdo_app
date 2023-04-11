@@ -13,37 +13,37 @@
     </h3>
         <div class="container">
             <div class="form-container">
-                <form method="POST">
+                <form id="form" method="POST">
                     <label for="item">アクセ:</label>
                     <select name="item" id="item" class="select2">
                     {% for option in [
-                    ('crescent', '三日月守護者のリング', 'crescent.webp'),
-                    ('ruin_ring', '廃墟の瞳リング', 'ruin_ring.webp'), 
-                    ('tun_ring', 'ツングラドのリング', 'tun_ring.webp'),
-                    ('ominous_ring', '不気味な背後のリング', 'ominous_ring.webp'),
-                    ('cadry', 'カドリー守護者のリング', 'cadry.webp'),
-                    ('ogre_ring', 'オーガのリング', 'ogre_ring.webp'),
-                    ('laytenn', 'ライテンの動力石', 'laytenn.webp'),
-                    ('tun_neck', 'ツングラドのネックレス', 'tun_neck.webp'),
-                    ('lunar', '目覚めた月のネックレス', 'lunar.webp'),
-                    ('river', '目覚めた川のネックレス', 'river.webp'),
-                    ('sicil', 'シチルのネックレス', 'sicil.webp'),
-                    ('basi_belt', 'バジリスクのベルト', 'basi_belt.webp'),
-                    ('valt_belt', 'バルタラの隠れた光ベルト', 'valt_belt.webp'),
-                    ('tun_belt', 'ツングラドのベルト', 'tun_belt.webp'),
-                    ('centa_belt', 'ケンタウロスのベルト', 'centa_belt.webp'),
-                    ('orkin_belt', 'オルキンラドのベルト', 'orkin_belt.webp'),
-                    ('turo_belt', 'トゥーロのベルト', 'turo_belt.webp'),
-                    ('disto', '黒い侵食のイヤリング', 'disto.webp'),
-                    ('vaha', 'バアの暁', 'vaha.webp'),
-                    ('narc', 'ナクの耳飾り', 'narc.webp'), 
-                    ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'),
-                    ('dawn', '黎明のイヤリング', 'dawn.webp'),
-                    ('ethereal', '夢幻のイヤリング', 'ethereal.webp'),
-                    ('manos_ring', 'マノスリング', 'manos_ring.webp'),
-                    ('manos_earring', 'マノスイヤリング', 'manos_earring.webp'),
-                    ('manos_necklace', 'マノスネックレス', 'manos_necklace.webp'),
-                    ('manos_belt', 'マノスベルト', 'manos_belt.webp')
+                    ('crescent', '三日月守護者のリング', 'images/crescent.webp'),
+                    ('ruin_ring', '廃墟の瞳リング', 'images/ruin_ring.webp'), 
+                    ('tun_ring', 'ツングラドのリング', 'images/tun_ring.webp'),
+                    ('ominous_ring', '不気味な背後のリング', 'images/ominous_ring.webp'),
+                    ('cadry', 'カドリー守護者のリング', 'images/cadry.webp'),
+                    ('ogre_ring', 'オーガのリング', 'images/ogre_ring.webp'),
+                    ('laytenn', 'ライテンの動力石', 'images/laytenn.webp'),
+                    ('tun_neck', 'ツングラドのネックレス', 'images/tun_neck.webp'),
+                    ('lunar', '目覚めた月のネックレス', 'images/lunar.webp'),
+                    ('river', '目覚めた川のネックレス', 'images/river.webp'),
+                    ('sicil', 'シチルのネックレス', 'images/sicil.webp'),
+                    ('basi_belt', 'バジリスクのベルト', 'images/basi_belt.webp'),
+                    ('valt_belt', 'バルタラの隠れた光ベルト', 'images/valt_belt.webp'),
+                    ('tun_belt', 'ツングラドのベルト', 'images/tun_belt.webp'),
+                    ('centa_belt', 'ケンタウロスのベルト', 'images/centa_belt.webp'),
+                    ('orkin_belt', 'オルキンラドのベルト', 'images/orkin_belt.webp'),
+                    ('turo_belt', 'トゥーロのベルト', 'images/turo_belt.webp'),
+                    ('disto', '黒い侵食のイヤリング', 'images/disto.webp'),
+                    ('vaha', 'バアの暁', 'images/vaha.webp'),
+                    ('narc', 'ナクの耳飾り', 'images/narc.webp'), 
+                    ('tun_ear', 'ツングラドのイヤリング', 'images/tun_ear.webp'),
+                    ('dawn', '黎明のイヤリング', 'images/dawn.webp'),
+                    ('ethereal', '夢幻のイヤリング', 'images/ethereal.webp'),
+                    ('manos_ring', 'マノスリング', 'images/manos_ring.webp'),
+                    ('manos_earring', 'マノスイヤリング', 'images/manos_earring.webp'),
+                    ('manos_necklace', 'マノスネックレス', 'images/manos_necklace.webp'),
+                    ('manos_belt', 'マノスベルト', 'images/manos_belt.webp')
                     ] %}
                         <option value="{{ option[0] }}" data-image="{{ url_for('static', filename=option[2]) }}"
                         {% if selected_item == option[0] %}selected{% endif %}>{{ option[1] }}</option>
@@ -79,17 +79,52 @@
                     <input type="submit" value="表示">
                 </form>
             </div>
-            <div class="results-container">
-            {% if str_profit is not none %}
-                {% if int_profit < 0 %}
-                    <p>{{ name }}{{ level }}の強化期待値(損益)は <span style="color: rgb(255, 0, 0);">{{ str_profit }}</span> シルバーです。</p>
-                {% elif int_profit > 0 %}
-                    <p>{{ name }}{{ level }}の強化期待値(損益)は <span style="color: rgb(0, 189, 0);">{{ str_profit }}</span> シルバーです。</p>
-                {% else %}
-                    <p>{{ name }}{{ level }}の強化期待値(損益)は{{ str_profit }}シルバーです。</p>
-                {% endif %}
-            {% endif %}
-            </div>            
+            <div class="results-container" id="results-container"></div>            
         </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script>
+         $(document).ready(function() {
+            $('#form').on("submit", function(e) {
+                e.preventDefault();
+                const item = $('#item').val();
+                const level = $('#level').val();
+                const family_fame = $('#family_fame').prop("checked");
+                const pp = $('#pp').prop("checked");
+                const marchant_ring = $('#marchant_ring').prop("checked");
+                const acc_alc = $('#acc_alc').prop("checked");
+                $.ajax({
+                    method: "POST",
+                    url: "/acc-enhancing-v2-ajax",
+                    contentType: 'application/json',
+                    data: JSON.stringify({
+                        item: item,
+                        level: level,
+                        family_fame: family_fame,
+                        pp: pp,
+                        marchant_ring: marchant_ring,
+                        acc_alc: acc_alc
+                    }),
+                    success: function(response) {
+                        const result = response.result;
+                        let profitColor = '';
+                        if (result.int_profit < 0) {
+                            profitColor = 'rgb(255, 0, 0)';
+                        } else if (result.int_profit > 0) {
+                            profitColor = 'rgb(0, 189, 0)';
+                        } else {
+                            profitColor = 'inherit';
+                        }
+                        const resultHtml = `<p>${result.name}${result.level}の強化期待値(損益)は <span style="color: ${profitColor};">${result.str_profit}</span> シルバーです。</p>`;
+                        $('#results-container').html(resultHtml);
+                    },
+                    error: function(){
+                        alert("エラーが発生しました。");
+                    }
+                });
+            });
+        });
+    </script>
     </main>
 {%endblock%}

@@ -14,8 +14,8 @@
 
 
       <meta name="description" content="MMOPRG,黒い砂漠のアクセサリー強化において、強化したほうが儲けが出るのか、そのまま売ったほうが良いのかを考察できる計算機です。絶賛開発中。" />
-      <link rel="apple-touch-icon" type="image/png" href="{{ url_for('static', filename='apple-touch-icon-180x180.png') }}">
-      <link rel="icon" type="image/png" href="{{ url_for('static', filename='icon-192x192.png') }}">
+      <link rel="apple-touch-icon" type="image/png" href="{{ url_for('static', filename='images/apple-touch-icon-180x180.png') }}">
+      <link rel="icon" type="image/png" href="{{ url_for('static', filename='images/icon-192x192.png') }}">
       <title>{% block title %}アクセ期待値計算機{% endblock %}</title>
       
       <!-- Select2 CSS -->
@@ -42,9 +42,9 @@
    <body>
       <div class="content">
          <header>
-            <a href="{{ url_for('index_root')}}" class="title"><img src="{{ url_for('static', filename='logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
+            <a href="{{ url_for('index_root')}}" class="title"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
             <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
-               <img src="{{ url_for('static', filename='icon.png') }}" alt="アイコン">
+               <img src="{{ url_for('static', filename='images/icon.png') }}" alt="アイコン">
                <span class="name" id="header-name">Powerd by れじぇない</span>
             </a>
          </header>
@@ -69,29 +69,29 @@
                      <label for="item">アクセ:</label>
                      <select name="item" id="item" class="select2">
                         {% for option in [
-                        ('crescent', '三日月守護者のリング', 'crescent.webp'),
-                        ('ruin_ring', '廃墟の瞳リング', 'ruin_ring.webp'), 
-                        ('tun_ring', 'ツングラドのリング', 'tun_ring.webp'),
-                        ('ominous_ring', '不気味な背後のリング', 'ominous_ring.webp'),
-                        ('cadry', 'カドリー守護者のリング', 'cadry.webp'),
-                        ('ogre_ring', 'オーガのリング', 'ogre_ring.webp'),
-                        ('laytenn', 'ライテンの動力石', 'laytenn.webp'),
-                        ('tun_neck', 'ツングラドのネックレス', 'tun_neck.webp'),
-                        ('lunar', '目覚めた月のネックレス', 'lunar.webp'),
-                        ('river', '目覚めた川のネックレス', 'river.webp'),
-                        ('sicil', 'シチルのネックレス', 'sicil.webp'),
-                        ('basi_belt', 'バジリスクのベルト', 'basi_belt.webp'),
-                        ('valt_belt', 'バルタラの隠れた光ベルト', 'valt_belt.webp'),
-                        ('tun_belt', 'ツングラドのベルト', 'tun_belt.webp'),
-                        ('centa_belt', 'ケンタウロスのベルト', 'centa_belt.webp'),
-                        ('orkin_belt', 'オルキンラドのベルト', 'orkin_belt.webp'),
-                        ('turo_belt', 'トゥーロのベルト', 'turo_belt.webp'),
-                        ('disto', '黒い侵食のイヤリング', 'disto.webp'),
-                        ('vaha', 'バアの暁', 'vaha.webp'),
-                        ('narc', 'ナクの耳飾り', 'narc.webp'), 
-                        ('tun_ear', 'ツングラドのイヤリング', 'tun_ear.webp'),
-                        ('dawn', '黎明のイヤリング', 'dawn.webp'),
-                        ('ethereal', '夢幻のイヤリング', 'ethereal.webp')
+                        ('crescent', '三日月守護者のリング', 'images/crescent.webp'),
+                        ('ruin_ring', '廃墟の瞳リング', 'images/ruin_ring.webp'), 
+                        ('tun_ring', 'ツングラドのリング', 'images/tun_ring.webp'),
+                        ('ominous_ring', '不気味な背後のリング', 'images/ominous_ring.webp'),
+                        ('cadry', 'カドリー守護者のリング', 'images/cadry.webp'),
+                        ('ogre_ring', 'オーガのリング', 'images/ogre_ring.webp'),
+                        ('laytenn', 'ライテンの動力石', 'images/laytenn.webp'),
+                        ('tun_neck', 'ツングラドのネックレス', 'images/tun_neck.webp'),
+                        ('lunar', '目覚めた月のネックレス', 'images/lunar.webp'),
+                        ('river', '目覚めた川のネックレス', 'images/river.webp'),
+                        ('sicil', 'シチルのネックレス', 'images/sicil.webp'),
+                        ('basi_belt', 'バジリスクのベルト', 'images/basi_belt.webp'),
+                        ('valt_belt', 'バルタラの隠れた光ベルト', 'images/valt_belt.webp'),
+                        ('tun_belt', 'ツングラドのベルト', 'images/tun_belt.webp'),
+                        ('centa_belt', 'ケンタウロスのベルト', 'images/centa_belt.webp'),
+                        ('orkin_belt', 'オルキンラドのベルト', 'images/orkin_belt.webp'),
+                        ('turo_belt', 'トゥーロのベルト', 'images/turo_belt.webp'),
+                        ('disto', '黒い侵食のイヤリング', 'images/disto.webp'),
+                        ('vaha', 'バアの暁', 'images/vaha.webp'),
+                        ('narc', 'ナクの耳飾り', 'images/narc.webp'), 
+                        ('tun_ear', 'ツングラドのイヤリング', 'images/tun_ear.webp'),
+                        ('dawn', '黎明のイヤリング', 'images/dawn.webp'),
+                        ('ethereal', '夢幻のイヤリング', 'images/ethereal.webp')
                         ] %}
                         <option value="{{ option[0] }}" data-image="{{ url_for('static', filename=option[2]) }}"
                         {% if selected_item == option[0] %}selected{% endif %}>{{ option[1] }}</option>
@@ -158,8 +158,8 @@
             </div>
             <p class="footer-text">© 2023 れじぇない. All rights reserved.</p>
             <a href="https://github.com/Lejenay/bdo_app" target="_blank">
-               <img src="{{ url_for('static', filename='github-mark-white.png') }}" alt="GitHub" class="github-icon">
-               <img src="{{ url_for('static', filename='Twitter.png') }}" alt="Twitter" class="twitter-icon">
+               <img src="{{ url_for('static', filename='images/github-mark-white.png') }}" alt="GitHub" class="github-icon">
+               <img src="{{ url_for('static', filename='images/Twitter.png') }}" alt="Twitter" class="twitter-icon">
             </a>
          </div>
       </footer>
