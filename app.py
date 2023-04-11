@@ -412,7 +412,11 @@ def acc_pen_v2(acc, tax, acc_alc):
 
     return pen_expected_value, str_pen_expected_value
 
-@app.route('/acc-enhancing-v1', methods=['GET', 'POST'])
+@app.route('/acc-enhancing-v1')
+def acc_enhancing_v1():
+    return render_template('index.html')
+
+@app.route('/acc-enhancing-v1-ajax', methods=['POST', 'GET'])
 def index():
     tap = 0
     sell = 0
@@ -424,16 +428,14 @@ def index():
     family_fame = False
     pp = False
     marchant_ring = False
-    selected_item = None
-    selected_level = None
     if request.method == 'POST':
-        item = request.form['item']
-        level = request.form['level']
-        selected_item = item
-        selected_level = level
-        family_fame = "family_fame" in request.form
-        pp = "pp" in request.form
-        marchant_ring = "marchant_ring" in request.form
+        data = request.get_json()
+        item = data['item']
+        level = data['level']
+        family_fame = data['family_fame']
+        pp = data['pp']
+        marchant_ring = data['marchant_ring']
+        
         tax = 0.6533
         if family_fame:
             tax += 0.065
@@ -462,9 +464,18 @@ def index():
     name = ja_name(item)
     level = ja_level_name(level)
 
-    return render_template('index.html', tap=tap, sell=sell, str_tap=str_tap, str_sell=str_sell, name=name, level=level,
-                            family_fame=family_fame, pp=pp, marchant_ring=marchant_ring, 
-                            selected_item=selected_item, selected_level=selected_level)
+    response = {
+        'result':{
+            'tap': tap,
+            'sell': sell,
+            'str_tap': str_tap,
+            'str_sell': str_sell,
+            'name': name,
+            'level': level,
+        }
+    }
+
+    return(jsonify(response))
 
 @app.route('/acc-enhancing-v2')
 def acc_calc_v2():
@@ -540,7 +551,7 @@ def updates():
     updates = [
     {
         'date': '2023-04-11',
-        'info': '計算機v2にAjaxを導入しました。'
+        'info': 'Ajaxを導入しました。(自己満足)'
     },
     {
         'date': '2023-04-08',
@@ -588,4 +599,3 @@ def page_not_found(e):
 
 if __name__ == '__main__':
     app.run(debug=True)
-    app.config['DEBUG'] = True

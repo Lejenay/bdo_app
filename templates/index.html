@@ -51,7 +51,7 @@
          <nav>
             <ul>
                <li><a href="{{ url_for('index_root')}}">ポータル</a></li>
-               <li><a href="{{ url_for('index')}}">アクセ期待値計算機v1</a></li>
+               <li><a href="{{ url_for('acc_enhancing_v1')}}">アクセ期待値計算機v1</a></li>
                <li><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
             </ul>
          </nav>
@@ -65,7 +65,7 @@
             </h3>
             <div class="container">
                <div class="form-container">
-                  <form method="POST">
+                  <form method="POST" id="v1-form">
                      <label for="item">アクセ:</label>
                      <select name="item" id="item" class="select2">
                         {% for option in [
@@ -122,27 +122,54 @@
                      <input type="submit" value="表示">
                   </form>
                </div>
-               <div class="results-container">
-               {% if tap > sell %}
-                  {% if str_tap %}
-                     <p>{{ name }}{{ level }}の強化期待値は <span style="color: rgb(0, 189, 0);">{{ str_tap }}</span> シルバーです。</p>
-                  {% endif %}
-
-                  {% if str_sell %}
-                     <p>{{ name }}をそのまま売ると、売り上げは <span style="color: rgb(255, 0, 0);">{{ str_sell }} </span>シルバーです。</p>
-                  {% endif %}
-
-               {% else %}
-                  {% if str_tap %}
-                     <p>{{ name }}{{ level }}の強化期待値は <span style="color: rgb(255, 0, 0);">{{ str_tap }}</span> シルバーです。</p>
-                  {% endif %}
-
-                  {% if str_sell %}
-                  <p>{{ name }}をそのまま売ると、売り上げは <span style="color: rgb(0, 189, 0);">{{ str_sell }} </span>シルバーです。</p>
-                  {% endif %}
-               {% endif %}
-               </div>
+               <div class="results-container" id="results-container"></div>
             </div>
+            <script>
+            $(document).ready(function() {
+               $('#v1-form').on("submit", function(e) {
+                  e.preventDefault();
+                  const item = $('#item').val();
+                  const level = $('#level').val();
+                  const family_fame = $('#family_fame').prop("checked");
+                  const pp = $('#pp').prop("checked");
+                  const marchant_ring = $('#marchant_ring').prop("checked");
+                  $.ajax({
+                     method: "POST",
+                     url: "/acc-enhancing-v1-ajax",
+                     contentType: 'application/json',
+                     data: JSON.stringify({
+                        item: item,
+                        level: level,
+                        family_fame: family_fame,
+                        pp: pp,
+                        marchant_ring: marchant_ring,
+                     }),
+                     success: function(response) {
+                        const result = response.result;
+                        let tap_col = '';
+                        let sell_col = '';
+
+                        if (result.tap > result.sell) {
+                              tap_col = 'rgb(255, 0, 0)';
+                              sell_col = 'rgb(0, 189, 0)';
+                        } else if (result.tap < result.sell) {
+                              tap_col = 'rgb(0, 189, 0)';
+                              sell_col = 'rgb(255, 0, 0)';
+                        } else {
+                              tap_col = 'inherit';
+                              sell_col = 'inherit';
+                        }
+                        const resultHtml = `<p>${result.name}${result.level}の強化期待値は <span style="color: ${tap_col};">${result.str_tap}</span> シルバーです。</p>
+                                             <p>${result.name}をそのまま売ると、売り上げは <span style="color: ${sell_col};">${result.str_sell}</span> シルバーです。</p>`;
+                        $('#results-container').html(resultHtml);
+                     },
+                     error: function(){
+                        alert("ひえ～! エラーが発生しました。");
+                     }
+                  });
+               });
+            });
+            </script>
          </main>
 
          {% endblock %}
@@ -188,29 +215,29 @@
             });
          });
 
-            $(document).ready(function() {
-               function formatOption(option) {
-               if (!option.id) {
-                  return option.text;
-               }
-               const isManos = option.text.includes("マノス");
-               const optionElement = $('<span>', {
-                  class: isManos ? 'red-text' : 'yellow-text',
-                  text: option.text
-               });
+         $(document).ready(function() {
+            function formatOption(option) {
+            if (!option.id) {
+               return option.text;
+            }
+            const isManos = option.text.includes("マノス");
+            const optionElement = $('<span>', {
+               class: isManos ? 'red-text' : 'yellow-text',
+               text: option.text
+            });
 
-               // 画像要素の追加
-               const imgSrc = $(option.element).data('image');
-               const imgElement = $('<img>', {
-                  src: imgSrc,
-                  class: 'select2-img',
-                  style: 'margin-right: 5px;'
-               });
+            // 画像要素の追加
+            const imgSrc = $(option.element).data('image');
+            const imgElement = $('<img>', {
+               src: imgSrc,
+               class: 'select2-img',
+               style: 'margin-right: 5px;'
+            });
 
-               const container = $('<span>');
-               container.append(imgElement);
-               container.append(optionElement);
-               return container;
+            const container = $('<span>');
+            container.append(imgElement);
+            container.append(optionElement);
+            return container;
             }
 
             $('#item').select2({
