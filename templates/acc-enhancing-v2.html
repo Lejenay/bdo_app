@@ -58,25 +58,29 @@
                     {% endfor %}
                     </select>
 
-                    <label for="family-fame">家門名声:</label>
+                    <label for="pp" class="cb-container">プレパケ
+                    <input type="checkbox" id="pp" name="pp" value="on" checked="checked" {% if pp %} checked{% endif %}>
+                    <span class="checkmark"></span>
+                    </label>
+
+                    <label for="family_fame" class="cb-container">家門名声7000以上
                     <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
-                    <label class="checkbox-label" for="family_fame">7000以上</label>
+                    <span class="checkmark"></span>
+                    </label>
 
-                    <label for="pp">プレパケ:</label>
-                    <input type="checkbox" id="pp" name="pp" value="on" {% if pp %} checked{% endif %}>
-                    <label class="checkbox-label" for="pp"></label>
-
-                    <label for="marchant_ring">巨匠のリング:</label>
+                    <label for="marchant_ring" class="cb-container">巨匠のリング
                     <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
-                    <label class="checkbox-label" for="marchant_ring"></label>
+                    <span class="checkmark"></span>
+                    </label>
 
-                    <label for="marchant_ring">アクセ錬金:</label>
+                    <label for="acc_alc" class="cb-container">アクセ錬金  <span class="warn">(叩くアクセを取引所で購入する場合にチェック)</span>
                     <input type="checkbox" id="acc_alc" name="acc_alc" value="on" {% if acc_alc %} checked{% endif %}>
-                    <label class="checkbox-label" for="acc_alc"></label>
-                    <span class="warn">※叩くアクセを取引所で購入する場合にチェック</span>
+                    <span class="checkmark"></span>
+                    </label>
                     <br>
+    
                     <br>
-                    <input type="submit" value="表示">
+                    <input type="submit" value="計算">
                 </form>
             </div>
             <div class="results-container" id="results-container"></div>            

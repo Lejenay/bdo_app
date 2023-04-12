@@ -52,7 +52,6 @@
             color: #fff;
             padding: 20px;
             text-align: center;
-            margin-top: 40px;
          }
 
          .footer-text {
@@ -201,7 +200,7 @@
 
          label {
             display: block;
-            font-weight: bold;
+            font-weight: normal;
             margin: 10px 0;
          }
 
@@ -222,10 +221,9 @@
             border:1px solid #fff;
             color: #ffffff;
             outline: none;
-            font-size: 1rem;
+            font-size: 20px;
             background-color: #4caf50;
             cursor: pointer;
-            margin-top: 20px;
             /*アニメーションの指定*/ 
             transition: all 0.4s ease-out;
          }
@@ -236,7 +234,7 @@
             background: linear-gradient(270deg, #4caf50 0%, #ceee41 50%, #17742b 100%);
             background-size: 200% auto;
             background-position: right center;
-            font-size: 1rem;
+            font-size: 20px;
             box-shadow: 0 5px 10px rgba(108, 250, 120, 0.4);
          }
 
@@ -248,6 +246,75 @@
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border-radius: 10px;
             background-color: #fff;
+         }
+
+         /* Customize the label (the container) */
+         .cb-container {
+            display: block;
+            position: relative;
+            padding-left: 35px;
+            margin-top: 30px;
+            margin-bottom: 30px;
+            cursor: pointer;
+            font-size: 16px;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+         }
+         
+         /* Hide the browser's default checkbox */
+         .cb-container input {
+            position: absolute;
+            opacity: 0;
+            cursor: pointer;
+            height: 0;
+            width: 0;
+         }
+         
+         /* Create a custom checkbox */
+         .checkmark {
+            position: absolute;
+            top: 0;
+            left: 0;
+            height: 25px;
+            width: 25px;
+            background-color: #eee;
+         }
+         
+         /* On mouse-over, add a grey background color */
+         .cb-container:hover input ~ .checkmark {
+            background-color: #ccc;
+         }
+         
+         /* When the checkbox is checked, add a blue background */
+         .cb-container input:checked ~ .checkmark {
+            background-color: #2196F3;
+         }
+         
+         /* Create the checkmark/indicator (hidden when not checked) */
+         .checkmark:after {
+            content: "";
+            position: absolute;
+            display: none;
+         }
+         
+         /* Show the checkmark when checked */
+         .cb-container input:checked ~ .checkmark:after {
+            display: block;
+         }
+         
+         /* Style the checkmark/indicator */
+         .cb-container .checkmark:after {
+            left: 9px;
+            top: 5px;
+            width: 5px;
+            height: 10px;
+            border: solid white;
+            border-width: 0 3px 3px 0;
+            -webkit-transform: rotate(45deg);
+            -ms-transform: rotate(45deg);
+            transform: rotate(45deg);
          }
 
          input[type="checkbox"] {
@@ -285,6 +352,18 @@
             max-height: 300px !important;
             height: 300px !important;
             background-color: rgb(252, 252, 252);
+         }
+
+         .select2-container--default .select2-results__option--highlighted[aria-selected] {
+            background-color: #F0F1F2;
+            color: #393A3B; 
+         }
+
+         .select2-container--default .select2-search--dropdown .select2-search__field {
+            border: 1px solid #aaa;
+            border-radius: 4px;
+            padding-top: 8px;
+            padding-bottom: 8px;
          }
 
          a, a:visited {
