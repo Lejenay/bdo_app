@@ -421,3 +421,8 @@
          .privacy p {
             box-shadow: none;
          }
+
+         .Beta {
+            padding-left: 20px;
+            margin-bottom:-5px;
+         }
