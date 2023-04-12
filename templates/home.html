@@ -7,12 +7,17 @@
 {%block contents%}
 <h1>アプリケーション ポータル</h1>
 <section class="portal">
-<a href="{{ url_for('acc_enhancing_v1')}}"><h2>アクセ期待値計算機v1</h2></a>
-<span>未強化アクセを叩くか売るか、どっちが利益でるの？<br>そんな疑問を解決してくれます。</span>
-<div>
-    <a href="{{ url_for('acc_calc_v2')}}"><h2 style="display:inline;">アクセ期待値計算機v2</h2></a><span class="Beta-icon">Beta</span>
+<div class="portal-v1">
+    <a href="{{ url_for('acc_enhancing_v1')}}"><h2>アクセ期待値計算機v1</h2></a>
+    <span>未強化アクセを叩くか売るか、どっちが利益でるの？<br>そんな疑問を解決してくれます。</span>
 </div>
-<span>どの強化段階まで叩けば一番利益がでるのかな？<br>そんなお悩みを解決してくれます。</span><br><br>
-<span style="color: red;">現在、 <span style="font-size:20px; font-weight: bold;">v2のみ</span> でマノスアクセ計算・アクセ錬金計算（取引所でアクセを買って叩くこと）が利用可能です。</span>
+<div class="portal-v2">
+    <div class="potal-v2-title">
+        <a href="{{ url_for('acc_calc_v2')}}"><h2 style="display:inline;">アクセ期待値計算機v2</h2></a>
+        <span class="Beta-icon">Beta</span>
+    </div><br>
+    <span>どの強化段階まで叩けば一番利益がでるのかな？<br>そんなお悩みを解決してくれます。</span><br><br>
+    <span style="color: red;">現在、 <span style="font-size:20px; font-weight: bold;">v2のみ</span> でマノスアクセ計算・アクセ錬金計算（取引所でアクセを買って叩くこと）が利用可能です。</span>
+</div>
 </section>
 {%endblock%}
