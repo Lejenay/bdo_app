@@ -58,19 +58,23 @@
                     {% endfor %}
                     </select>
 
-                    <label for="pp" class="cb-container">プレパケ
-                    <input type="checkbox" id="pp" name="pp" value="on" checked="checked" {% if pp %} checked{% endif %}>
-                    <span class="checkmark"></span>
+                    <label for="pp" class="cb-container">
+                        <img src="{{ url_for('static', filename='images/pp.webp') }}" alt="プレパケ" width="20" height="20">
+                        プレパケ
+                        <input type="checkbox" id="pp" name="pp" value="on" checked="checked" {% if pp %} checked{% endif %}>
+                        <span class="checkmark"></span>
                     </label>
-
+    
                     <label for="family_fame" class="cb-container">家門名声7000以上
-                    <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
-                    <span class="checkmark"></span>
+                        <input type="checkbox" id="family_fame" name="family_fame" value="on" {% if family_fame %} checked{% endif %}>
+                        <span class="checkmark"></span>
                     </label>
-
-                    <label for="marchant_ring" class="cb-container">巨匠のリング
-                    <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
-                    <span class="checkmark"></span>
+    
+                    <label for="marchant_ring" class="cb-container">
+                        <img src="{{ url_for('static', filename='images/marchant_ring.webp') }}" alt="巨匠のリング" width="20" height="20">  
+                        巨匠のリング
+                        <input type="checkbox" id="marchant_ring" name="marchant_ring" value="on" {% if marchant_ring %} checked{% endif %}>
+                        <span class="checkmark"></span>
                     </label>
 
                     <label for="acc_alc" class="cb-container">アクセ錬金  <span class="warn">(叩くアクセを取引所で購入する場合にチェック)</span>
