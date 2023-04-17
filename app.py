@@ -1,12 +1,14 @@
 from flask import Flask, render_template, request, url_for, jsonify
-from api_call_module import api_call
-app = Flask(__name__)
 
+from api_call_module import api_call
+
+app = Flask(__name__)
 
 # DB // SQLを導入したいですまる
 bs_armour = api_call.item_api_call(16002)
 bs_wepon = api_call.item_api_call(16001)
 concentrated_magical_black_gem = api_call.item_api_call(4987)
+
 crescent = api_call.acc_api_call(12031)
 tun_ring = api_call.acc_api_call(12061)
 ruin_ring = api_call.acc_api_call(12060)

@@ -1,5 +1,5 @@
-import requests
 import re
+import requests
 
 def acc_api_call(item_id):
     url = 'https://trade.jp.playblackdesert.com/Trademarket/GetWorldMarketSubList'
