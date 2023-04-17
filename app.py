@@ -1,81 +1,39 @@
 from flask import Flask, render_template, request, url_for, jsonify
-import re
-import requests
-import os
-
+from api_call_module import api_call
 app = Flask(__name__)
 
-def acc_api_call(item_id):
-    url = 'https://trade.jp.playblackdesert.com/Trademarket/GetWorldMarketSubList'
-    headers = {        
-        "Content-Type": "application/json",
-        "User-Agent": "BlackDesert"
-    }
-    payload = {
-        "keyType": 0,
-        "mainKey": item_id
-    }
-
-    response = requests.request('POST', url, json=payload, headers=headers)
-    res_letter = response.text
-    res_list = re.split(r'[\-|:]', res_letter)
-    del res_list[0:2]
-    del res_list[-1]
-
-    price_list = [int(res_list[10 * n + 3]) for n in range(6)]
-    return price_list
-
-
-
-def item_api_call(item_id):
-    url = 'https://trade.jp.playblackdesert.com/Trademarket/GetWorldMarketSubList'
-    headers = {        
-        "Content-Type": "application/json",
-        "User-Agent": "BlackDesert"
-    }
-    payload = {
-        "keyType": 0,
-        "mainKey": item_id
-    }
-
-    response = requests.request('POST', url, json=payload, headers=headers)
-    res_letter = response.text
-    res_list = re.split(r'[\-|:]', res_letter)
-    del res_list[0:2]
-    del res_list[-1]
-    return int(res_list[3])
 
 # DB // SQLを導入したいですまる
-bs_armour = item_api_call(16002)
-bs_wepon = item_api_call(16001)
-concentrated_magical_black_gem = item_api_call(4987)
-crescent = acc_api_call(12031)
-tun_ring = acc_api_call(12061)
-ruin_ring = acc_api_call(12060)
-disto = acc_api_call(11853)
-narc = acc_api_call(11834)
-tun_belt = acc_api_call(12237)
-tun_ear = acc_api_call(11828)
-tun_neck = acc_api_call(11629)
-turo_belt = acc_api_call(12257)
-basi_belt = acc_api_call(12230)
-centa_belt = acc_api_call(12229)
-ominous_ring = acc_api_call(12068)
-ogre_ring = acc_api_call(11607)
-laytenn = acc_api_call(11630)
-sicil = acc_api_call(11625)
-dawn = acc_api_call(11855)
-vaha = acc_api_call(11875)
-cadry = acc_api_call(12032)
-valt_belt = acc_api_call(12236)
-ethereal = acc_api_call(11856)
-lunar = acc_api_call(11663)
-river = acc_api_call(11662)
-orkin_belt = acc_api_call(12251)
-manos_ring = acc_api_call(705511)
-manos_earring = acc_api_call(705510)
-manos_necklace = acc_api_call(705509)
-manos_belt = acc_api_call(705512)
+bs_armour = api_call.item_api_call(16002)
+bs_wepon = api_call.item_api_call(16001)
+concentrated_magical_black_gem = api_call.item_api_call(4987)
+crescent = api_call.acc_api_call(12031)
+tun_ring = api_call.acc_api_call(12061)
+ruin_ring = api_call.acc_api_call(12060)
+disto = api_call.acc_api_call(11853)
+narc = api_call.acc_api_call(11834)
+tun_belt = api_call.acc_api_call(12237)
+tun_ear = api_call.acc_api_call(11828)
+tun_neck = api_call.acc_api_call(11629)
+turo_belt = api_call.acc_api_call(12257)
+basi_belt = api_call.acc_api_call(12230)
+centa_belt = api_call.acc_api_call(12229)
+ominous_ring = api_call.acc_api_call(12068)
+ogre_ring = api_call.acc_api_call(11607)
+laytenn = api_call.acc_api_call(11630)
+sicil = api_call.acc_api_call(11625)
+dawn = api_call.acc_api_call(11855)
+vaha = api_call.acc_api_call(11875)
+cadry = api_call.acc_api_call(12032)
+valt_belt = api_call.acc_api_call(12236)
+ethereal = api_call.acc_api_call(11856)
+lunar = api_call.acc_api_call(11663)
+river = api_call.acc_api_call(11662)
+orkin_belt = api_call.acc_api_call(12251)
+manos_ring = api_call.acc_api_call(705511)
+manos_earring = api_call.acc_api_call(705510)
+manos_necklace = api_call.acc_api_call(705509)
+manos_belt = api_call.acc_api_call(705512)
 
 # アクセサリーと強化関数のマッピング
 accessories = {
@@ -301,7 +259,6 @@ def acc_pen(acc, tax):
     return pen_expected_value, base_sell, str_pen_expected_value, str_base_sell
 
 inverce_accessories = {tuple(v):k for k, v in accessories.items()}
-
 def acc_pri_v2(acc, tax, acc_alc):
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.75
