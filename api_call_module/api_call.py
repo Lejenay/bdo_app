@@ -1,7 +1,7 @@
 import re
 import requests
 
-def acc_api_call(item_id):
+def acc_price_list(item_id):
     url = 'https://trade.jp.playblackdesert.com/Trademarket/GetWorldMarketSubList'
     headers = {        
         "Content-Type": "application/json",
@@ -23,7 +23,7 @@ def acc_api_call(item_id):
 
 
 
-def item_api_call(item_id):
+def item_price_list(item_id):
     url = 'https://trade.jp.playblackdesert.com/Trademarket/GetWorldMarketSubList'
     headers = {        
         "Content-Type": "application/json",
