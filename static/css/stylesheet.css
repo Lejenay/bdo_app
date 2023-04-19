@@ -95,6 +95,12 @@
             margin-left: 10px;
          }
 
+         .LS-icon {
+            width: 32px;
+            height: 32px;
+            margin-left: 10px;
+         }
+
          nav {
             position: relative;
             bottom: -35px;
