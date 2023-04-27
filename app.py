@@ -1,7 +1,9 @@
 from flask import Flask, render_template, request, jsonify
-from  app_funcs import calculation_v1, calculation_v2, funcs
+from  app_funcs import calculation_v1, calculation_v2, funcs, update
 
 app = Flask(__name__)
+app.config["JSON_AS_ASCII"] = False
+
 
 @app.route('/acc-enhancing-v1')
 def acc_enhancing_v1():
@@ -48,14 +50,12 @@ def index():
     selected_accessory = funcs.accessories.get(item)
     selected_func = enhancement_funcs.get(level)
 
-    # 強化期待値と売り上げを計算
     if selected_accessory and selected_func:
         tap, sell, str_tap, str_sell = selected_func(selected_accessory, tax)
 
     name = funcs.ja_name(item)
     level = funcs.ja_level_name(level)
 
-    # レスポンスを作成
     response = {
         'result':{
             'tap': tap,
@@ -114,7 +114,6 @@ def acc_calc_v2_ajax():
         selected_accessory = funcs.accessories.get(item)
         selected_func = enhancement_funcs.get(level)
 
-        # 強化期待値を計算
         if selected_accessory and selected_func:
             int_profit, str_profit = selected_func(selected_accessory, tax, acc_alc)
 
@@ -125,7 +124,6 @@ def acc_calc_v2_ajax():
         int_profit = None
         str_profit = None
 
-    # レスポンスを作成
     response = {
         'result':{
             'int_profit': int_profit,
@@ -139,37 +137,7 @@ def acc_calc_v2_ajax():
 
 @app.route('/updates', methods=['GET', 'POST'])
 def updates():
-    updates = [
-    {
-        'date': '2023-04-11',
-        'info': 'Ajaxを導入しました。(自己満足)'
-    },
-    {
-        'date': '2023-04-08',
-        'info': '計算機v2にマノスアクセ・アクセ錬金（金策）計算を追加しました。'
-    },
-    {
-        'date': '2023-04-07',
-        'info': '期待値計算機のバージョン2を公開しました。'
-    },
-    {
-        'date': '2023-03-27',
-        'info': '真5の期待値計算を追加しました。'
-    },
-    {
-        'date': '2023-03-26',
-        'info': '真4の期待値計算とアクセサリーを追加しました。'
-    },
-    {
-        'date': '2023-03-24',
-        'info': 'アップデート情報と計算方法のセクションを追加しました。'
-    },
-    {
-        'date': '2023-03-23',
-        'info': 'ページを公開しました。'
-    },
-]
-    
+    updates = update.updates    
     return render_template('updates.html', updates=updates)
 
 @app.route('/how-to-calc', methods=['GET', 'POST'])
