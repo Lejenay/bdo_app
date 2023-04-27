@@ -1,6 +1,0 @@
-Metadata-Version: 2.1
-Name: bdo-item-api-call
-Version: 1.0.0
-Summary: A module to call the BDO item API, and return the price of the item. details:https://developers.veliainn.com/
-Author: Lejenay
-License: Free

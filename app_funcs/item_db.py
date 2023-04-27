@@ -1,0 +1,36 @@
+# SQL勉強しようね。
+from item_api import api_call
+
+# 強化素材
+bs_armour = api_call.item_price_list(16002)
+bs_wepon = api_call.item_price_list(16001)
+concentrated_magical_black_gem = api_call.item_price_list(4987)
+
+# アクセサリー
+crescent = api_call.acc_price_list(12031)
+tun_ring = api_call.acc_price_list(12061)
+ruin_ring = api_call.acc_price_list(12060)
+disto = api_call.acc_price_list(11853)
+narc = api_call.acc_price_list(11834)
+tun_belt = api_call.acc_price_list(12237)
+tun_ear = api_call.acc_price_list(11828)
+tun_neck = api_call.acc_price_list(11629)
+turo_belt = api_call.acc_price_list(12257)
+basi_belt = api_call.acc_price_list(12230)
+centa_belt = api_call.acc_price_list(12229)
+ominous_ring = api_call.acc_price_list(12068)
+ogre_ring = api_call.acc_price_list(11607)
+laytenn = api_call.acc_price_list(11630)
+sicil = api_call.acc_price_list(11625)
+dawn = api_call.acc_price_list(11855)
+vaha = api_call.acc_price_list(11875)
+cadry = api_call.acc_price_list(12032)
+valt_belt = api_call.acc_price_list(12236)
+ethereal = api_call.acc_price_list(11856)
+lunar = api_call.acc_price_list(11663)
+river = api_call.acc_price_list(11662)
+orkin_belt = api_call.acc_price_list(12251)
+manos_ring = api_call.acc_price_list(705511)
+manos_earring = api_call.acc_price_list(705510)
+manos_necklace = api_call.acc_price_list(705509)
+manos_belt = api_call.acc_price_list(705512)

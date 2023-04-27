@@ -159,11 +159,11 @@
                         let sell_col = '';
 
                         if (result.tap > result.sell) {
-                              tap_col = 'rgb(255, 0, 0)';
-                              sell_col = 'rgb(0, 189, 0)';
-                        } else if (result.tap < result.sell) {
                               tap_col = 'rgb(0, 189, 0)';
                               sell_col = 'rgb(255, 0, 0)';
+                        } else if (result.tap < result.sell) {
+                              tap_col = 'rgb(255, 0, 0)';
+                              sell_col = 'rgb(0, 189, 0)';
                         } else {
                               tap_col = 'inherit';
                               sell_col = 'inherit';
