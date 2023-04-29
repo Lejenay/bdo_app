@@ -32,16 +32,12 @@
       <link rel="preconnect" href="https://fonts.googleapis.com">
       <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
       <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400;500;700&display=swap" rel="stylesheet">
-      
-      <!-- Google Adsense -->
-      <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5924579731375363"
-      crossorigin="anonymous"></script>
-
       </script>
    </head>
 
    <body>
       <div class="content">
+         <!--ヘッダー-->
          <header>
             <a href="{{ url_for('index_root')}}" class="title"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
             <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
@@ -58,7 +54,7 @@
          </nav>
 
          {% block contents%}
-
+         <!--メイン-->
          <main>
             <h1>アクセ期待値計算機v1</h1>
             <h3>未強化のアクセを選択した強化段階まで叩く場合と、未強化アクセを全て売却する場合の損益を各々計算します。<br>
@@ -184,7 +180,7 @@
          {% endblock %}
 
       </div>
-
+      <!--フッター-->
       <footer>
          <div class="footer-container">
             <div class="footer-links">
@@ -240,7 +236,7 @@
                text: option.text
             });
 
-            // 画像要素の追加
+            // select2のオプションに画像を表示
             const imgSrc = $(option.element).data('image');
             const imgElement = $('<img>', {
                src: imgSrc,

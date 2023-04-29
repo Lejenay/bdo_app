@@ -1,12 +1,19 @@
-import app_funcs.item_db as item_db
+# 真nを叩いた時の期待売上(string) / str_{n}_expected_value
+# ベース2つを売った時の売上(string) / str_base_sell
 
-# 真nを叩いた時の期待売上/str_{n}_expected_value
-# ベース2つを売った時の売上/str_base_sell
+# *スタックと必要ブラックストーン数、成功確率の関係
+# format.{enhancement level / amount of bs / fail stacks / success chance }
+# pri(真1) / 31bs(ブラックストーン) / 18fs(スタック18) / 0.700(強化成功確率)
+# duo / 150bs / 40fs / 0.500
+# tri / 200bs / 44fs / 0.405
+# tet / 2000bs / 110fs / 0.300
+# pen / 20000bs / 490fs(不可能なので220fsで計算) / 0.115(220fs)
+
+import app_funcs.item_db as item_db
 
 def acc_pri(acc, tax):
     stack_cost = item_db.bs_armour * 31
     chance = 0.70
-    # 18fsでsoftcap
     pri_expected_value = round((acc[1]*tax - stack_cost)*chance)
     str_pri_expected_value = '{:,}'.format(pri_expected_value)
     base_sell = round((acc[0]*2) *tax)
@@ -20,7 +27,6 @@ def acc_duo(acc, tax):
     s2_chance = 0.7*0.5
     s1f1_chance = 0.7*0.5
     f1_chance = 0.3
-    # duoは40fsでsoftcap
     duo_expected_value = round( ((acc[2]*tax - try2_stack_cost)* s2_chance) + ((0 - try1_stack_cost)*s1f1_chance) + acc[0]*tax*f1_chance ) 
     str_duo_expected_value = '{:,}'.format(duo_expected_value)
     base_sell = round((acc[0]*3) *tax)
@@ -46,11 +52,9 @@ def acc_tri(acc, tax):
 
 def acc_tet(acc, tax):
     try4_stack_cost = (2000 + 200 + 150 + 31)* item_db.bs_armour
-    try3_stack_cost = (200 + 150 + 31) * item_db.bs_armour
     try2_stack_cost = (150 + 31) * item_db.bs_armour
     try1_stack_cost = 31 * item_db.bs_armour
 
-    # straight
     s4_chance = 0.7*0.5*0.41*0.3
     # tri then fail
     s3f1_chance = 0.7*0.5*0.41*0.7

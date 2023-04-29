@@ -1,6 +1,18 @@
+# 真nを叩いた時の期待売上(string) / str_{n}_expected_value
+# アクセ錬金オプション(bool) / acc_alc
+
+# *スタックと必要ブラックストーン数、成功確率の関係
+# format.{enhancement level / amount of bs / fail stacks / success chance }
+# pri(真1) / 31bs(ブラックストーン) / 18fs(スタック18) / 0.700(強化成功確率)
+# duo / 150bs / 40fs / 0.500
+# tri / 200bs / 44fs / 0.405
+# tet / 2000bs / 110fs / 0.300
+# pen / 20000bs / 490fs(不可能なので220fsで計算) / 0.115(220fs)
+
 from app_funcs import item_db, funcs
 
 inverce_accessories = {tuple(v):k for k, v in funcs.accessories.items()}
+
 def acc_pri_v2(acc, tax, acc_alc):
     if "manos" in inverce_accessories[tuple(acc)]:
         success_chance = 0.75
