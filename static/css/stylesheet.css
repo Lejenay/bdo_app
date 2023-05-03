@@ -551,7 +551,8 @@ a:hover, a:focus {
 
    /* メニュー黒ポチを消す */
    .hum_list {
-       list-style: none;
+      list-style: none;
+      padding: 0;
    }
 
    /* アイコンがクリックされたらメニューを表示 */
@@ -560,7 +561,7 @@ a:hover, a:focus {
    }
 
    .hum_item {
-       padding: 40px 0;
+       padding: 40px 0px;
        text-align: center;
        border-bottom: 1px solid #eee;
    }
