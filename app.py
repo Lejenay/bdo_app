@@ -3,6 +3,7 @@ from  app_funcs import calculation_v1, calculation_v2, funcs, update
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 
 @app.route('/acc-enhancing-v1')

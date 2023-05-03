@@ -12,6 +12,18 @@
       gtag('config', 'G-48245QC43P');
       </script>
 
+      <!-- font script -->
+      <script>
+         (function(d) {
+           var config = {
+             kitId: 'zvy1tkj',
+             scriptTimeout: 3000,
+             async: true
+           },
+           h=d.documentElement,t=setTimeout(function(){h.className=h.className.replace(/\bwf-loading\b/g,"")+" wf-inactive";},config.scriptTimeout),tk=d.createElement("script"),f=false,s=d.getElementsByTagName("script")[0],a;h.className+=" wf-loading";tk.src='https://use.typekit.net/'+config.kitId+'.js';tk.async=true;tk.onload=tk.onreadystatechange=function(){a=this.readyState;if(f||a&&a!="complete"&&a!="loaded")return;f=true;clearTimeout(t);try{Typekit.load(config)}catch(e){}};s.parentNode.insertBefore(tk,s)
+         })(document);
+      </script>
+
       <meta charset="UTF-8">
       <meta name="viewport" content="width=device-width">
       <meta name="description" content="MMOPRG,黒い砂漠のアクセサリー強化において、強化したほうが儲けが出るのか、そのまま売ったほうが良いのかを考察できる計算機です。絶賛開発中。" />
@@ -25,13 +37,9 @@
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <!-- Select2 JavaScript -->
       <script src="https://cdn.jsdelivr.net/npm/select2@4.3.0-rc.1/dist/js/select2.min.js"></script>
-      
+      <!-- local css -->
       <link rel="stylesheet" href="{{ url_for('static', filename='css/stylesheet.css') }}">
 
-      <!-- Google Fonts -->
-      <link rel="preconnect" href="https://fonts.googleapis.com">
-      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-      <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@100;400;500;700&display=swap" rel="stylesheet">
       </script>
    </head>
 
@@ -40,18 +48,29 @@
          <!--ヘッダー-->
          <header>
             <a href="{{ url_for('index_root')}}" class="title"><img src="{{ url_for('static', filename='images/logo.png') }}" alt="黒い砂漠 便利アプリ"></a>
-            <a href="https://twitter.com/Lejenay" target="_blank" style="display: flex; align-items: center;">
-               <img src="{{ url_for('static', filename='images/icon.png') }}" alt="アイコン">
-               <span class="name" id="header-name">Powerd by れじぇない</span>
-            </a>
+            <nav class="nav">
+               <ul>
+                  <li><a href="{{ url_for('index_root')}}">ポータル</a></li>
+                  <li><a href="{{ url_for('acc_enhancing_v1')}}">アクセ期待値計算機v1</a></li>
+                  <li><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
+               </ul>
+            </nav>
+
+            <div class="hum">
+               <input id="drawer_input" class="drawer_hidden" type="checkbox">
+           
+               <label for="drawer_input" class="drawer_open"><span></span></label>
+           
+               <nav class="hum_content">
+                   <ul class="hum_list">
+                   <li class="hum_item"><a href="{{ url_for('index_root')}}">ポータル</a></li>
+                   <li class="hum_item"><a href="{{ url_for('acc_enhancing_v1')}}">アクセ期待値計算機v1</a></li>
+                   <li class="hum_item"><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
+                   </ul>
+               </nav>
+           
+           </div>
          </header>
-         <nav>
-            <ul>
-               <li><a href="{{ url_for('index_root')}}">ポータル</a></li>
-               <li><a href="{{ url_for('acc_enhancing_v1')}}">アクセ期待値計算機v1</a></li>
-               <li><a href="{{ url_for('acc_calc_v2')}}">アクセ期待値計算機v2</a></li>
-            </ul>
-         </nav>
 
          {% block contents%}
          <!--メイン-->
@@ -183,25 +202,27 @@
       <!--フッター-->
       <footer>
          <div class="footer-container">
-            <div class="footer-links">
+            <div class="footer-links-in">
                <a href="{{ url_for('how_to_calc')}}" class="footer-link">計算方法</a>
                <a href="{{ url_for('updates')}}" class="footer-link">アップデート情報</a>
                <a href="{{ url_for('privacy')}}" class="footer-link">プライバシー</a>
             </div>
             <p class="footer-text">© 2023 れじぇない. All rights reserved.</p>
-            <a href="https://github.com/Lejenay/bdo_app" target="_blank">
-               <img src="{{ url_for('static', filename='images/github-mark-white.png') }}" alt="GitHub" class="github-icon">
-            </a>
-            <a href="https://twitter.com/Lejenay" target="_blank">   
-               <img src="{{ url_for('static', filename='images/Twitter.png') }}" alt="Twitter" class="twitter-icon">
-            </a>
-            <a href="https://lejenay.github.io/Leje-space/" target="_blank">
-               <img src="{{ url_for('static', filename='images/LS-icon.png') }}" alt="LejeSpace" class="LS-icon">
-            </a>
+            <div class="footer-links-out">
+               <a href="https://github.com/Lejenay/bdo_app" target="_blank">
+                  <img src="{{ url_for('static', filename='images/github-mark-white.png') }}" alt="GitHub" class="github-icon">
+               </a>
+               <a href="https://twitter.com/Lejenay" target="_blank">   
+                  <img src="{{ url_for('static', filename='images/Twitter.png') }}" alt="Twitter" class="twitter-icon">
+               </a>
+               <a href="https://lejenay.github.io/Leje-space/" target="_blank">
+                  <img src="{{ url_for('static', filename='images/LS-icon.png') }}" alt="LejeSpace" class="LS-icon">
+               </a>
+            </div>
          </div>
       </footer>
 
-      <!-- jQuery and Select2 JavaScript -->
+      <!-- js -->
       <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
       <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
       <script>
@@ -230,13 +251,13 @@
             if (!option.id) {
                return option.text;
             }
+            //　出力の文字色を変更 //
             const isManos = option.text.includes("マノス");
             const optionElement = $('<span>', {
                class: isManos ? 'red-text' : 'yellow-text',
                text: option.text
             });
-
-            // 画像要素の追加
+            // select2のオプションに画像を追加 //
             const imgSrc = $(option.element).data('image');
             const imgElement = $('<img>', {
                src: imgSrc,
