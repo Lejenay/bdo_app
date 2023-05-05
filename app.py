@@ -1,5 +1,7 @@
 from flask import Flask, render_template, request, jsonify
+
 from  app_funcs import calculation_v1, calculation_v2, funcs, update
+
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
@@ -29,7 +31,6 @@ def index():
         family_fame = data['family_fame']
         pp = data['pp']
         marchant_ring = data['marchant_ring']
-        
         tax = 0.6533
         if family_fame:
             tax += 0.065
@@ -67,7 +68,6 @@ def index():
             'level': level,
         }
     }
-
     return(jsonify(response))
 
 @app.route('/acc-enhancing-v2')
@@ -95,14 +95,12 @@ def acc_calc_v2_ajax():
         family_fame = data['family_fame']
         pp = data['pp']
         marchant_ring = data['marchant_ring']
-        
         if family_fame:
             tax += 0.065
         if pp:
             tax += 0.1949
         if marchant_ring:
             tax += 0.0325
-
         enhancement_funcs = {
             'pri': calculation_v2.acc_pri_v2,
             'duo': calculation_v2.acc_duo_v2,
@@ -114,13 +112,11 @@ def acc_calc_v2_ajax():
         # 選択されたアクセサリーと強化関数を取得
         selected_accessory = funcs.accessories.get(item)
         selected_func = enhancement_funcs.get(level)
-
         if selected_accessory and selected_func:
-            int_profit, str_profit = selected_func(selected_accessory, tax, acc_alc)
-
+            int_profit, str_profit = selected_func(selected_accessory,
+                                                   tax, acc_alc)
         name = funcs.ja_name(item)
         level = funcs.ja_level_name(level)
-    
     else:
         int_profit = None
         str_profit = None
@@ -133,7 +129,6 @@ def acc_calc_v2_ajax():
             'level': level,
         }
     }
-
     return(jsonify(response))
 
 @app.route('/updates', methods=['GET', 'POST'])
