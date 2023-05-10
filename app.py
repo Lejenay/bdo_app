@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, jsonify
 
-from  app_funcs import calculation_v1, calculation_v2, funcs, update
+from  app_funcs import calculation_v1, calculation_v2, funcs, update, db_test
 
 
 app = Flask(__name__)
@@ -152,5 +152,8 @@ def privacy():
 def page_not_found(e):
     return render_template('404.html'), 404
 
+""" # this is test
+print("Mongo_res", db_test.result())
+ """
 if __name__ == '__main__':
     app.run(debug=True)
