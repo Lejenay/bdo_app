@@ -1,7 +1,9 @@
-from flask import Flask, render_template, request, jsonify
+from flask import Flask
+from flask import render_template
+from flask import request
+from flask import jsonify
 
-from  app_funcs import calculation_v1, calculation_v2, funcs, update, db_test
-
+from  app_funcs import calculation_v1, calculation_v2, funcs, update
 
 app = Flask(__name__)
 app.config["JSON_AS_ASCII"] = False
